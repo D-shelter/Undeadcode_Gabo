@@ -14,8 +14,9 @@ public class myFindtreasureVO {
     private String myfind_tv_tag3;
     private String myfind_tv_when;
     private String myfind_tv_like;
+    private String myfind_tv_km;
 
-    public myFindtreasureVO(Drawable myfind_img_profile, Drawable myfind_img_like, String myfind_tv_userid, String myfind_tv_tag1, String myfind_tv_tag2, String myfind_tv_tag3, String myfind_tv_when, String myfind_tv_like) {
+    public myFindtreasureVO(Drawable myfind_img_profile, Drawable myfind_img_like, String myfind_tv_userid, String myfind_tv_tag1, String myfind_tv_tag2, String myfind_tv_tag3, String myfind_tv_when, String myfind_tv_like, String myfind_tv_km) {
         this.myfind_img_profile = myfind_img_profile;
         this.myfind_img_like = myfind_img_like;
         this.myfind_tv_userid = myfind_tv_userid;
@@ -24,6 +25,7 @@ public class myFindtreasureVO {
         this.myfind_tv_tag3 = myfind_tv_tag3;
         this.myfind_tv_when = myfind_tv_when;
         this.myfind_tv_like = myfind_tv_like;
+        this.myfind_tv_km = myfind_tv_km;
     }
 
     public Drawable getMyfind_img_profile() {
@@ -88,5 +90,13 @@ public class myFindtreasureVO {
 
     public void setMyfind_tv_like(String myfind_tv_like) {
         this.myfind_tv_like = myfind_tv_like;
+    }
+
+    public String getMyfind_tv_km() {
+        return myfind_tv_km;
+    }
+
+    public void setMyfind_tv_km(String myfind_tv_km) {
+        this.myfind_tv_km = myfind_tv_km;
     }
 }
