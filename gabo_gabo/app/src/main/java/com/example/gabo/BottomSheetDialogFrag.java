@@ -10,13 +10,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.overlay.PathOverlay;
+
+
+
+import java.util.Arrays;
 
 
 /*-------------------핀 선택시 뜨는 유저 댓글 바텀시트 프래그먼트 --------------------------*/
@@ -24,7 +36,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
 
     BottomSheetBehavior bBehavior;
-    
+    private NaverMap naverMap;
+
     private ListView tc_list;
     private trsCommentAdapter tcAdapter = new trsCommentAdapter();
 
@@ -42,10 +55,12 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     private TextView ti_tv_tag1, ti_tv_tag2, ti_tv_tag3;
 
     // 메인엑티비티에서 번들로 가져온값을 저장하려고 만듬
-    private String cate,key1,key2,key3,hideuser,hidedate,like;
+    private String cate,key1,key2,key3,hideuser,latitude,longitude,hidedate,like,user_location;
 
     //trs_comment_bottom_sheet_lyt 레이아웃에서 변경한 값을 넣어줄 아이디를 넣어줄 변수
     private TextView ti_tv_when,ti_tv_like;
+
+    private BottomSheetDialogFrag bottomSheetDialogFrag;
 
 
 
@@ -73,16 +88,24 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         key2 = getArguments().getString("key2","0");
         key3 = getArguments().getString("key3","0");
         hideuser = getArguments().getString("hideuser","0");
+        latitude = getArguments().getString("latitude");
+        longitude = getArguments().getString("longitude");
         hidedate = getArguments().getString("hidedate","0");
         like = getArguments().getString("like","0");
+        user_location = getArguments().getString("userlocation");
+
+        String[] user_lo = user_location.split(",");
+        Double user_latitude = Double.parseDouble(user_lo[0]);
+        Double user_longitude = Double.parseDouble(user_lo[1]);
+
+        Double t_latitude = Double.parseDouble(latitude);
+        Double t_longitude = Double.parseDouble(longitude);
 
         BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
         View view = View.inflate(getContext(),R.layout.trs_comment_bottom_sheet_lyt,null);
 
         dialog.setContentView(view);
         bBehavior = BottomSheetBehavior.from((View)view.getParent());
-
-        View view2 = View.inflate(getContext(),R.layout.treasure_info_lyt,null);
 
         ti_tv_comment = view.findViewById(R.id.ti_tv_comment);
         ti_tv_tag1 = view.findViewById(R.id.ti_tv_tag1);
@@ -100,6 +123,8 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
 
         System.out.println("숨긴날"+hidedate);
 
+
+        bottomSheetDialogFrag = new BottomSheetDialogFrag();
 
 
 
@@ -122,7 +147,9 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext().getApplicationContext(),"위치안내",Toast.LENGTH_SHORT).show();
+
             }
+
         });
         
 
@@ -252,5 +279,17 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         });
         win_dialog.show();
 
+    }
+    // 프레그먼트 종료하는 메서드
+    private void removeFragment(Fragment fragment) {
+        if (fragment != null) {
+            FragmentManager mFragmentManager = getActivity().getSupportFragmentManager();
+            final FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.remove(fragment);
+            mFragmentTransaction.commit();
+            fragment.onDestroy();
+            fragment.onDetach();
+            fragment = null;
+        }
     }
 }

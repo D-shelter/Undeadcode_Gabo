@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     //보물 아이디
     private String t_id;
 
+    // 보물정보창 여닫이
+    private boolean t_info = false;
 
 
     @Override
@@ -161,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         sendRequest1();
 
-        // 가끔 처음 로딩때 마커 안떠서 타이머 켜놓음 5초에 한번씩 마커 갱신 리퀘스트 실행함
+        // 가끔 처음 로딩때 마커 안떠서 타이머 켜놓음 5초에 한번 더 리퀘스트 됨
         Timer timer = new Timer();
 
         TimerTask TT = new TimerTask() {
@@ -174,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         timer.schedule(TT, 1000, 5000); //Timer 실행
 
-//        timer.cancel();//타이머 종료
+        timer.cancel();//타이머 종료
         /** 처음 바텀 적용
         BottomNavigationView bottom_btn = findViewById(R.id.page3);
         bottom_btn.performClick();
@@ -214,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.naverMap = naverMap;
         naverMap.setOnMapClickListener((coord,point) -> {
             infoWindow.close();
+            t_info = false;
         });
     }
     Overlay.OnClickListener listener = overlay -> {
@@ -226,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
             infoWindow.close();
+            t_info = false;
         }
 
         return true;
@@ -369,8 +373,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String key2 = info[2];
                 String key3 = info[3];
                 String hideuser = info[4];
+                String latitude = info[6];
+                String longitude = info[7];
                 String hidedate = info[8].substring(2,16);
                 String like = info[9];
+                t_info = true;
 
                 Bundle bundle = new Bundle();
                 bundle.putString("cate",cate);
@@ -378,12 +385,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 bundle.putString("key2",key2);
                 bundle.putString("key3",key3);
                 bundle.putString("hideuser",hideuser);
+                bundle.putString("latitude",latitude);
+                bundle.putString("longitude",longitude);
                 bundle.putString("hidedate",hidedate);
                 bundle.putString("like",like);
+                bundle.putString("userlocation",user_location);
                 //바텀시트
                 BottomSheetDialogFrag bottomDialog = new BottomSheetDialogFrag();
                 bottomDialog.setArguments(bundle);
                 setInfoWindow(bottomDialog);
+
 
 
 
