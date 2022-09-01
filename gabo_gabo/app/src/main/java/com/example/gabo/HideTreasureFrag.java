@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.ImageDecoder;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -70,6 +71,8 @@ public class HideTreasureFrag extends Fragment {
 
     private ImageView img_addphoto;  //사진등록버튼
     private Dialog dialog_camera;   //사진등록하기 다이얼로그
+    private Dialog dialog_addtrcomplete; //보물등록완료 다이얼로그
+
     private static final String TAG = "Treasure";
 
     Bitmap bitmap;
@@ -211,10 +214,33 @@ public class HideTreasureFrag extends Fragment {
 
 
     }
+    /*------------------보물찾기 완료 다이얼로그-----------------*/
+    private void openAddtrCompleteDialog() {
+        dialog_addtrcomplete = new Dialog(getContext());
+        dialog_addtrcomplete.setContentView(R.layout.win_layout_dialog);
+        dialog_addtrcomplete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView imageViewClose=dialog_addtrcomplete.findViewById(R.id.imageViewClose);
+        TextView addcomplete_close=dialog_addtrcomplete.findViewById(R.id.addcomplete_close);
+
+        imageViewClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog_addtrcomplete.dismiss();
+            }
+        });
+        addcomplete_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog_addtrcomplete.dismiss();
+            }
+        });
+        dialog_addtrcomplete.show();
+
+    }
 
 
 
-    /*-------다이얼로그 디자인 함수-------*/
+    /*-------사진 첨부 다이얼로그 디자인 함수-------*/
     public void showDialogCamera(){
         dialog_camera = new Dialog(getContext());
         dialog_camera.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -272,6 +298,7 @@ public class HideTreasureFrag extends Fragment {
             }
         }
     });
+
 
     /**
      * Bitmap이미지의 가로, 세로 사이즈를 리사이징 한다.
