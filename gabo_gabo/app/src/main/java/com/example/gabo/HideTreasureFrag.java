@@ -217,7 +217,7 @@ public class HideTreasureFrag extends Fragment {
     /*------------------보물찾기 완료 다이얼로그-----------------*/
     private void openAddtrCompleteDialog() {
         dialog_addtrcomplete = new Dialog(getContext());
-        dialog_addtrcomplete.setContentView(R.layout.win_layout_dialog);
+        dialog_addtrcomplete.setContentView(R.layout.dialog_addtrcomplete);
         dialog_addtrcomplete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ImageView imageViewClose=dialog_addtrcomplete.findViewById(R.id.imageViewClose);
         TextView addcomplete_close=dialog_addtrcomplete.findViewById(R.id.addcomplete_close);
