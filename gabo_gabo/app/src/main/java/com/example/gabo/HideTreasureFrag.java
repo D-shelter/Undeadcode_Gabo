@@ -326,6 +326,7 @@ public class HideTreasureFrag extends Fragment {
 //                System.out.println(info[0]);
                 if (response.equals("등록신청완료")){
                     Toast.makeText(getContext().getApplicationContext(),"등록신청완료",Toast.LENGTH_LONG).show();
+                    upload = false;
                 } else {
                     Toast.makeText(getContext().getApplicationContext(),"등록 실패",Toast.LENGTH_LONG).show();
                 }
@@ -384,7 +385,7 @@ public class HideTreasureFrag extends Fragment {
                 params.put("longitude",location[1]);
                 params.put("img", String.valueOf(bitmap));
 
-                upload = false;
+
                 return params;
             }
         };
