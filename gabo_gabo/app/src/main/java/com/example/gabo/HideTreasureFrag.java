@@ -354,6 +354,7 @@ public class HideTreasureFrag extends Fragment {
                 if (response.equals("등록신청완료")){
                     Toast.makeText(getContext().getApplicationContext(),"등록신청완료",Toast.LENGTH_LONG).show();
                     upload = false;
+                    openAddtrCompleteDialog();
                 } else {
                     Toast.makeText(getContext().getApplicationContext(),"등록 실패",Toast.LENGTH_LONG).show();
                 }
