@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText edt_login_email, edt_login_passoword;
-    private Button btn_login_signin, btn_login_signup;
+    private Button btn_login_signin, btn_login_signup, btn_id_Find, btn_pw_Find;
     private RequestQueue queue;
     private StringRequest stringRequest;
 
@@ -45,7 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         edt_login_passoword = findViewById(R.id.edt_login_password);
         btn_login_signin = findViewById(R.id.btn_login_signin);
         btn_login_signup = findViewById(R.id.btn_login_signup);
-
+        btn_id_Find = findViewById(R.id.btn_id_Find);
+        btn_pw_Find = findViewById(R.id.btn_pw_Find);
 
         //회원가입 페이지
         btn_login_signup.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +56,21 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btn_id_Find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), idFind.class);
+                startActivity(intent);
+            }
+        });
+        btn_pw_Find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), pwFind.class);
+                startActivity(intent);
+            }
+        });
+
         //로그인 기능
         btn_login_signin.setOnClickListener(new View.OnClickListener() {
             @Override
