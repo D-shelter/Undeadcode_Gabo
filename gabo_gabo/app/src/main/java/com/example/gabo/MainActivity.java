@@ -55,7 +55,7 @@ import java.util.TimerTask;
 
 //메인 액티비티
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
-
+    protected String mainHost = "http://192.168.21.252:5013/";
     private NaverMap naverMap;
     private FusedLocationSource locationSource;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
