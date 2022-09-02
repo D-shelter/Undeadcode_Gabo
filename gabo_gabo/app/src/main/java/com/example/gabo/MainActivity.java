@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String user_id;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,12 +92,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //LoginActivity 에서 ID값 가져오기
         Intent intent = getIntent();
-        user_id = intent.getStringExtra("id");
-
-
-
-
-
+        String user_id = intent.getStringExtra("id");
 
         //기본상단바 안보이게 하기
         ActionBar actionBar = getSupportActionBar();
@@ -183,8 +179,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         sendRequest1();
 
         /** 처음 바텀 적용
-        BottomNavigationView bottom_btn = findViewById(R.id.page3);
-        bottom_btn.performClick();
+         BottomNavigationView bottom_btn = findViewById(R.id.page3);
+         bottom_btn.performClick();
          */
 
 
@@ -314,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         if (info2[6].equals("null")){ break; }
                         // 승인 안됐으면 마커표시 안함
                         if (info2[7].equals("0")){break;}
-                        
+
                         double lati = Double.valueOf(info2[8]);
                         double longi = Double.valueOf(info2[9]);
                         Marker marker = new Marker();
@@ -458,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         queue.add(stringRequest);
 
 
-        }
+    }
 
 
 }
