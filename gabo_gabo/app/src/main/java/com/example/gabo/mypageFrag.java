@@ -11,23 +11,28 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+
 public class mypageFrag extends Fragment {
 
-    LinearLayout test_findbb ;
-    LinearLayout myfind_bignum;
+    LinearLayout myfind_open ; //내가 찾은 보물 버튼
+    LinearLayout myfind_bignum; //내가 찾은 보물 숫자 버튼
 
-    LinearLayout myhide_open;
-    LinearLayout myhide_bignum;
+    LinearLayout myhide_open; //내가 숨긴 보물 버튼
+    LinearLayout myhide_bignum; //내가 숨긴 보물 숫자 버튼
 
-    LinearLayout mycomment_open;
+    LinearLayout mycomment_open; //게시물 모아보기 버튼
 
 
-//    BottomSheetDialogFrag bottomDialog;
     MyFindTreasureFrag myFindTreasureFrag; //내가 찾은 보물 바텀시트 프래그먼트
     MyHideTreasureFrag myHideTreasureFrag; //내가 숨긴 보물 바텀시트 프래그먼트
     MyCommentsFrag myCommentsFrag; //게시물 모아보기 바텀시트 프래그먼트
 
     FragmentManager fmm ;
+
+    private RequestQueue queue;
+    private StringRequest stringRequest;
 
     @Nullable
     @Override
@@ -35,16 +40,14 @@ public class mypageFrag extends Fragment {
         View view = inflater.inflate(R.layout.mypage_lyt,container,false);
 
         fmm=getActivity().getSupportFragmentManager();
-//        bottomDialog = new BottomSheetDialogFrag();
 
 
         /*---------내가찾은보물 열기-----------*/
         myFindTreasureFrag = new MyFindTreasureFrag();
-        test_findbb = view.findViewById(R.id.test_findbb);
-        test_findbb.setOnClickListener(new View.OnClickListener() {
+        myfind_open = view.findViewById(R.id.myfind_open);
+        myfind_open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                bottomDialog.show(fmm,"test");
                 myFindTreasureFrag.show(fmm,"showmyfind");
             }
         });
