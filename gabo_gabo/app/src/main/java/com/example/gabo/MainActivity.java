@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -38,10 +40,13 @@ import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
 import com.naver.maps.map.overlay.OverlayImage;
+import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
+import com.naver.maps.map.widget.LocationButtonView;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Time;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -96,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         fm = getSupportFragmentManager();
         /*fm.beginTransaction().replace(R.id.frame,fragmHideTreasure).commit();*/
+
+
 
 
 
@@ -163,26 +170,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         sendRequest1();
 
-        // 가끔 처음 로딩때 마커 안떠서 타이머 켜놓음 5초에 한번 더 리퀘스트 됨
-        Timer timer = new Timer();
-
-        TimerTask TT = new TimerTask() {
-            @Override
-            public void run() {
-                // 반복실행할 구문
-                sendRequest1();
-            }
-        };
-
-        timer.schedule(TT, 1000, 5000); //Timer 실행
-
-        timer.cancel();//타이머 종료
         /** 처음 바텀 적용
         BottomNavigationView bottom_btn = findViewById(R.id.page3);
         bottom_btn.performClick();
          */
 
+
+
     }
+
 
 
     //marker 찍는 법
@@ -201,7 +197,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         naverMap.setLocationSource(locationSource); // 현재 위치
         //현재 위치 표시할 때 권한 확인
         ActivityCompat.requestPermissions(this,PERMISSIONS,LOCATION_PERMISSION_REQUEST_CODE);
+
+        UiSettings uiSettings = naverMap.getUiSettings();
+        uiSettings.setLocationButtonEnabled(true);
+        LocationButtonView locationButtonView = findViewById(R.id.hlocation);
+        locationButtonView.setMap(naverMap);
+
+        sendRequest1();
+
+
+
     }
+
+
+
 
     // 마커 정보창
     InfoWindow infoWindow = new InfoWindow();
@@ -237,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
+
     // 좌표를 나타내는 클래스
 //    LatLng coord = new LatLng(35.146678,126.922288);
     // 토스트로 위도 경도 출력
@@ -268,6 +278,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
 
     // 보물 갱신 리퀘스트
     public void sendRequest1() {
@@ -435,6 +446,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         queue.add(stringRequest);
 
 
-    }
+        }
+
 
 }
