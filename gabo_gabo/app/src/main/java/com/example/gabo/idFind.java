@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class idFind extends AppCompatActivity{
-    private MainActivity main;
     private Button btn_Find_id, btn_Find_pw, btn_Find_account;
     private EditText edt_Find_name, edt_Find_phone;
     private TextView tv_Find_name, tv_Find_phone;
@@ -64,7 +63,7 @@ public class idFind extends AppCompatActivity{
     }
             private void sendRequest() {
                 queue = Volley.newRequestQueue(this);
-                String url = main.mainHost+"findID";
+                String url = "http://192.168.21.196:5013/findID";
                 StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     // 응답데이터를 받아오는 곳
                     @Override
