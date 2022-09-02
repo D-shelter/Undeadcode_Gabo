@@ -301,9 +301,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onResponse(String response) {
                 Log.v("resultValue", response);
                 String[] info = response.split("/");
-                System.out.println(info.length);
+                //System.out.println(info.length);
                 for (int i = 0; i < info.length; i++) {
-                    System.out.println(info[i]);
+                    //System.out.println(info[i]);
                     for (int j = 0; j <info[i].length();j++){
                         String [] info2 = info[i].split(",");
                         // 찾은 유저가 있으면 마커표시 안함
