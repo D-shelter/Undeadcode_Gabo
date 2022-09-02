@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,6 +20,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -27,14 +38,17 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.overlay.PathOverlay;
 
 
-
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /*-------------------핀 선택시 뜨는 유저 댓글 바텀시트 프래그먼트 --------------------------*/
 
 public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
-
+    private MainActivity main;
     BottomSheetBehavior bBehavior;
     private NaverMap naverMap;
 
@@ -60,9 +74,16 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     //trs_comment_bottom_sheet_lyt 레이아웃에서 변경한 값을 넣어줄 아이디를 넣어줄 변수
     private TextView ti_tv_when,ti_tv_like;
 
+    // 하트 이미지
+    private ImageView ti_img_like;
+    //
+
     private BottomSheetDialogFrag bottomSheetDialogFrag;
 
+    private RequestQueue queue;
+    private StringRequest stringRequest;
 
+    private ArrayList<String> comments;
 
 
     @Override
@@ -112,6 +133,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         ti_tv_tag2 = view.findViewById(R.id.ti_tv_tag2);
         ti_tv_tag3 = view.findViewById(R.id.ti_tv_tag3);
         ti_tv_when = view.findViewById(R.id.ti_tv_when);
+        ti_img_like = view.findViewById(R.id.ti_img_like);
         ti_tv_like = view.findViewById(R.id.ti_tv_like);
 
         ti_tv_comment.setText(hideuser);
@@ -121,12 +143,22 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         ti_tv_when.setText(hidedate+"에 숨김");
         ti_tv_like.setText(like);
 
-        System.out.println("숨긴날"+hidedate);
+        sendRequest();
 
 
         bottomSheetDialogFrag = new BottomSheetDialogFrag();
 
 
+        /*---------------------찾았다 버튼--------------------- */
+        btn_find = view.findViewById(R.id.btn_find);
+        btn_find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(getContext().getApplicationContext(),"찾았다!",Toast.LENGTH_SHORT).show();
+//                openWinDialog();
+                openquizDialog();
+            }
+        });
 
 
 
@@ -280,16 +312,60 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         win_dialog.show();
 
     }
-    // 프레그먼트 종료하는 메서드
-    private void removeFragment(Fragment fragment) {
-        if (fragment != null) {
-            FragmentManager mFragmentManager = getActivity().getSupportFragmentManager();
-            final FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.remove(fragment);
-            mFragmentTransaction.commit();
-            fragment.onDestroy();
-            fragment.onDetach();
-            fragment = null;
-        }
+
+    public void sendRequest() {
+        // Volley Lib 새로운 요청객체 생성
+        queue = Volley.newRequestQueue(getContext().getApplicationContext());
+        // 서버에 요청할 주소
+        String url = main.mainHost+"commentlist";
+        // 요청 문자열 저장
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            // 응답데이터를 받아오는 곳
+            @Override
+            public void onResponse(String response) {
+                Log.v("resultValue", response);
+                comments.add(response);
+                System.out.println("어디보자"+comments.get(0));
+
+            }
+        }, new Response.ErrorListener() {
+            // 서버와의 연동 에러시 출력
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            // 보낼 데이터를 저장하는 곳
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+//                System.out.println("숨긴유저"+hideuser);
+                params.put("hide_user", hideuser);
+
+                return params;
+            }
+        };
+
+
+        String Tag = "LJY";
+        stringRequest.setTag(Tag);
+        queue.add(stringRequest);
+
+
     }
+
 }

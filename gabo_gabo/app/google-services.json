@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "294722866062",
+    "project_id": "projectgabo-593a0",
+    "storage_bucket": "projectgabo-593a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294722866062:android:3b91655708bea281b432df",
+        "android_client_info": {
+          "package_name": "com.example.gabo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294722866062-9pk8ls4iq6n1m13446s2op2rfara61m1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBL72bCcRdHNDWk7bEfPK9WpWLcKIqs5gw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294722866062-9pk8ls4iq6n1m13446s2op2rfara61m1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -55,7 +55,7 @@ import java.util.TimerTask;
 
 //메인 액티비티
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
-
+    protected String mainHost = "http://192.168.21.252:5013/";
     private NaverMap naverMap;
     private FusedLocationSource locationSource;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
@@ -78,9 +78,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     //보물 아이디
     private String t_id;
 
-    // 보물정보창 여닫이
-    private boolean t_info = false;
-
     private String user_id;
 
 
@@ -92,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //LoginActivity 에서 ID값 가져오기
         Intent intent = getIntent();
-        String user_id = intent.getStringExtra("id");
+        user_id = intent.getStringExtra("id");
 
         //기본상단바 안보이게 하기
         ActionBar actionBar = getSupportActionBar();
@@ -233,7 +230,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.naverMap = naverMap;
         naverMap.setOnMapClickListener((coord,point) -> {
             infoWindow.close();
-            t_info = false;
         });
     }
     Overlay.OnClickListener listener = overlay -> {
@@ -246,7 +242,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
             infoWindow.close();
-            t_info = false;
         }
 
         return true;
@@ -293,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getApplicationContext());
         // 서버에 요청할 주소
-        String url = "http://192.168.21.252:5013/mappage";
+        String url = mainHost+"mappage";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
@@ -301,9 +296,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onResponse(String response) {
                 Log.v("resultValue", response);
                 String[] info = response.split("/");
-                System.out.println(info.length);
+                //System.out.println(info.length);
                 for (int i = 0; i < info.length; i++) {
-                    System.out.println(info[i]);
+                    //System.out.println(info[i]);
                     for (int j = 0; j <info[i].length();j++){
                         String [] info2 = info[i].split(",");
                         // 찾은 유저가 있으면 마커표시 안함
@@ -376,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getApplicationContext());
         // 서버에 요청할 주소
-        String url = "http://192.168.21.252:5013/clicktrs";
+        String url = mainHost+"clicktrs";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
@@ -396,7 +391,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String longitude = info[7];
                 String hidedate = info[8].substring(2,16);
                 String like = info[9];
-                t_info = true;
 
                 Bundle bundle = new Bundle();
                 bundle.putString("cate",cate);

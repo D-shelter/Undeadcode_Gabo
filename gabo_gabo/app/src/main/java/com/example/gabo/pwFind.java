@@ -28,9 +28,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class pwFind extends AppCompatActivity {
-    Button btn_find_Id, btn_find_Pw, btn_join_Account;
-    EditText edt_find_Name, edt_find_Email;
-    TextView tv_find_Name, tv_find_Email3;
+    private MainActivity main;
+    private Button btn_find_Id, btn_find_Pw, btn_join_Account;
+    private EditText edt_find_Name, edt_find_Email;
+    private TextView tv_find_Name, tv_find_Email3;
 
     private RequestQueue queue;
     private StringRequest stringRequest;
@@ -63,7 +64,9 @@ public class pwFind extends AppCompatActivity {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this);
         // 서버에 요청할 주소
-        String url = "http://192.168.21.252:5013/login";
+
+        String url = main.mainHost+"findPw";
+
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
