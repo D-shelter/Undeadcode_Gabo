@@ -65,4 +65,7 @@ public class myFindAdapter extends BaseAdapter {
         myFindtreasureVO vo = new myFindtreasureVO(myfind_img_profile, myfind_img_like, myfind_tv_userid, myfind_tv_tag1, myfind_tv_tag2, myfind_tv_tag3, myfind_tv_when, myfind_tv_like,myfind_tv_km);
         this.items.add(vo);
     }
+
+
+
 }
