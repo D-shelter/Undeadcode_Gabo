@@ -60,59 +60,58 @@ public class idFind extends AppCompatActivity{
                 sendRequest();
 
             }
-            });
+        });
     }
 
-            private void sendRequest() {
-                queue = Volley.newRequestQueue(this);
-                String url = "http://192.168.21.177:5013/findID";
-                StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    // 응답데이터를 받아오는 곳
-                    @Override
-                    public void onResponse(String response) {
-                        Log.v("resultValue", response);
-                        String[] info = response.split(",");
-                        Intent intent = new Intent(getApplicationContext(), idReceive.class);
-                        intent.putExtra("data",info);
-                        startActivity(intent);
-                        finish();
-                    }
-                }, new Response.ErrorListener() {
-                    // 서버와의 연동 에러시 출력
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                }) {
-                    @Override //response를 UTF8로 변경해주는 소스코드
-                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                        try {
-                            String utf8String = new String(response.data, "UTF-8");
-                            return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
-                        } catch (UnsupportedEncodingException e) {
-                            // log error
-                            return Response.error(new ParseError(e));
-                        } catch (Exception e) {
-                            // log error
-                            return Response.error(new ParseError(e));
-                        }
-                    }
-
-                    // 보낼 데이터를 저장하는 곳
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        String name = edt_Find_name.getText().toString();
-                        String phone = edt_Find_phone.getText().toString();
-                        params.put("name", name);
-                        params.put("phone", phone);
-                        return params;
-                    }
-                };
-                String TAG = "leejh";
-                stringRequest2.setTag(TAG);
-                queue.add(stringRequest2);
+    private void sendRequest() {
+        queue = Volley.newRequestQueue(this);
+        String url = "http://192.168.21.177:5013/findID";
+        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            // 응답데이터를 받아오는 곳
+            @Override
+            public void onResponse(String response) {
+                Log.v("resultValue", response);
+                String[] info = response.split(",");
+                Intent intent = new Intent(getApplicationContext(), idReceive.class);
+                intent.putExtra("data",info);
+                startActivity(intent);
+                finish();
+            }
+        }, new Response.ErrorListener() {
+            // 서버와의 연동 에러시 출력
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
             }
 
-        }
+            // 보낼 데이터를 저장하는 곳
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                String name = edt_Find_name.getText().toString();
+                String phone = edt_Find_phone.getText().toString();
+                params.put("name", name);
+                params.put("phone", phone);
+                return params;
+            }
+        };
+        String TAG = "leejh";
+        stringRequest2.setTag(TAG);
+        queue.add(stringRequest2);
+    }
 
+}
