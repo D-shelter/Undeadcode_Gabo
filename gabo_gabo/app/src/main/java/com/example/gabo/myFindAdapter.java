@@ -2,6 +2,7 @@ package com.example.gabo;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.TestLooperManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,7 @@ public class myFindAdapter extends BaseAdapter {
         TextView myfind_tv_tag3 = view.findViewById(R.id.myfind_tv_tag3);
         TextView myfind_tv_when = view.findViewById(R.id.myfind_tv_when);
         TextView myfind_tv_like = view.findViewById(R.id.myfind_tv_like);
+        TextView myfind_tv_km = view.findViewById(R.id.myfind_tv_km);
 
 
         myfind_img_profile.setImageDrawable(vo.getMyfind_img_profile());
@@ -54,12 +56,13 @@ public class myFindAdapter extends BaseAdapter {
         myfind_tv_tag3.setText(vo.getMyfind_tv_tag3());
         myfind_tv_when.setText(vo.getMyfind_tv_when());
         myfind_tv_like.setText(vo.getMyfind_tv_like());
+        myfind_tv_km.setText(vo.getMyfind_tv_km());
 
         return view;
     }
 
-    public void addItems(Drawable myfind_img_profile, Drawable myfind_img_like, String myfind_tv_userid, String myfind_tv_tag1, String myfind_tv_tag2, String myfind_tv_tag3, String myfind_tv_when, String myfind_tv_like){
-        myFindtreasureVO vo = new myFindtreasureVO(myfind_img_profile, myfind_img_like, myfind_tv_userid, myfind_tv_tag1, myfind_tv_tag2, myfind_tv_tag3, myfind_tv_when, myfind_tv_like);
+    public void addItems(Drawable myfind_img_profile, Drawable myfind_img_like, String myfind_tv_userid, String myfind_tv_tag1, String myfind_tv_tag2, String myfind_tv_tag3, String myfind_tv_when, String myfind_tv_like, String myfind_tv_km){
+        myFindtreasureVO vo = new myFindtreasureVO(myfind_img_profile, myfind_img_like, myfind_tv_userid, myfind_tv_tag1, myfind_tv_tag2, myfind_tv_tag3, myfind_tv_when, myfind_tv_like,myfind_tv_km);
         this.items.add(vo);
     }
 }

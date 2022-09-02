@@ -31,6 +31,18 @@
             android:name="com.example.gabo.JoinActivity"
             android:exported="false" />
         <activity
+            android:name=".idFind"
+            android:exported="false" />
+        <activity
+            android:name=".pwFind"
+            android:exported="false" />
+        <activity
+            android:name=".idReceive"
+            android:exported="false" />
+        <activity
+            android:name=".pwReceive"
+            android:exported="false" />
+        <activity
             android:name="com.example.gabo.LoginActivity"
             android:exported="false" />
         <activity
