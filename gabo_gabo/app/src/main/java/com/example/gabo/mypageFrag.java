@@ -39,7 +39,7 @@ public class mypageFrag extends Fragment {
     LinearLayout mycomment_open; //게시물 모아보기 버튼
 
 
-    TextView mypage_tv_findnum, mypage_tv_hidenum, mypage_tv_likenum, mypage_tv_level;
+    TextView mypage_tv_findnum, mypage_tv_hidenum, mypage_tv_likenum, mypage_tv_level, mypage_tv_nickname,mypage_tv_like;
     String hidetrs,findtrs,like,level;
 
 
@@ -107,7 +107,7 @@ public class mypageFrag extends Fragment {
             }
         });
 
-        sendRequestmyhide();
+        sendRequestmypage();
 
         return view;
 
@@ -117,8 +117,8 @@ public class mypageFrag extends Fragment {
 
 
 
-    //내가 숨긴 보물 리퀘스트
-    public void sendRequestmyhide(){
+    //마이페이지 리퀘스트
+    public void sendRequestmypage(){
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getActivity());
         // 서버에 요청할 주소
@@ -135,15 +135,23 @@ public class mypageFrag extends Fragment {
                 String like = res[2];
                 String level = res[3];
 
+                String user_id;
+                user_id = getArguments().getString("user_id");
+
+
                 mypage_tv_findnum = getActivity().findViewById(R.id.mypage_tv_findnum);
                 mypage_tv_hidenum = getActivity().findViewById(R.id.mypage_tv_hidenum);
                 mypage_tv_likenum = getActivity().findViewById(R.id.mypage_tv_likenum);
                 mypage_tv_level = getActivity().findViewById(R.id.mypage_tv_level);
+                mypage_tv_nickname = getActivity().findViewById(R.id.mypage_tv_nickname);
+                mypage_tv_like = getActivity().findViewById(R.id.mypage_tv_like);
 
                 mypage_tv_findnum.setText(hidetrs);
                 mypage_tv_hidenum.setText(findtrs);
                 mypage_tv_likenum.setText(like);
-                mypage_tv_level.setText("Lv"+level);
+                mypage_tv_level.setText("Lv "+level);
+                mypage_tv_nickname.setText(user_id);
+                mypage_tv_like.setText(like);
 
             }
         }, new Response.ErrorListener() {
