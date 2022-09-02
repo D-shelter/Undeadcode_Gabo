@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //아이디 찾기 기능
         btn_id_Find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        // 비밀번호 찾기 기능
         btn_pw_Find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

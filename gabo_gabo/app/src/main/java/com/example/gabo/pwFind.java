@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +48,8 @@ public class pwFind extends AppCompatActivity {
         edt_find_Email = findViewById(R.id.edt_find_Email);
         tv_find_Name = findViewById(R.id.tv_find_Name);
         tv_find_Email3 = findViewById(R.id.tv_find_Email);
+
+        //아이디 찾기 기능
         btn_find_Id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,44 +57,38 @@ public class pwFind extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btn_join_Account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {sendRequest();
-                Intent intent = new Intent(getApplicationContext(), pwReceive.class);
-                startActivity(intent);
-            }
-        });
     }
 
-
-    public  void sendRequest(){
-        //메소드는 클래스 아래에서 만듬
+    public void sendRequest() {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this);
         // 서버에 요청할 주소
-        String url = "http://192.168.21.252:5013/findPw";
+        String url = "http://192.168.21.252:5013/login";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
             @Override
             public void onResponse(String response) {
-                Log.v("resultValue",response);
-                String [] info = response.split(",");
-                Log.v("resultValue","id : " +info[0]);
-                Log.v("resultValue","pw : " +info[1]);
-                Log.v("resultValue","nick : " +info[2]);
-                Log.v("resultValue","addr : " +info[3]);
-                Log.v("resultValue", "pn : " + info[4]);
-                Log.v("resultValue", "email : " + info[5]);
-
+                Log.v("resultValue", response);
+                String[] info = response.split(",");
+                System.out.println(info[0]);
+                System.out.println(edt_login_email.getText().toString());
+                if (info[0].equals(edt_login_email.getText().toString())){
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    intent.putExtra("id",edt_login_email.getText().toString());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(),"ID 또는 PW가 틀렸습니다.",Toast.LENGTH_LONG).show();
+                }
             }
         }, new Response.ErrorListener() {
+            // 서버와의 연동 에러시 출력
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        }){
-            @Override
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
                     String utf8String = new String(response.data, "UTF-8");
@@ -105,20 +102,25 @@ public class pwFind extends AppCompatActivity {
                 }
             }
 
+            // 보낼 데이터를 저장하는 곳
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                String id = edt_find_Name.getText().toString();
+                String name = edt_find_Name.getText().toString();
                 String email = edt_find_Email.getText().toString();
-                params.put("id", id);
+
+                params.put("name", name);
                 params.put("email", email);
+
                 return params;
             }
         };
-        String TAG = "leejh";
-        stringRequest.setTag(TAG);
+
+
+        String Tag = "LJH";
+        stringRequest.setTag(Tag);
         queue.add(stringRequest);
+
+
     }
-
-
 }
