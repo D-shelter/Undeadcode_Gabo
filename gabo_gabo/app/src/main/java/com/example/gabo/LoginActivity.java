@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
-    private MainActivity main;
     private EditText edt_login_email, edt_login_passoword;
     private Button btn_login_signin, btn_login_signup, btn_id_Find, btn_pw_Find;
     private RequestQueue queue;
@@ -88,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this);
         // 서버에 요청할 주소
-        String url = main.mainHost+"login";
+        String url = "http://192.168.21.196:5013/login";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳

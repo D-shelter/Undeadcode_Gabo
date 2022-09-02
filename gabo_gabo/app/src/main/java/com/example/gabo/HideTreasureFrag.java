@@ -62,7 +62,7 @@ import java.util.Map;
 
 /*-------------보물 등록페이지의 프레그먼트-----------------*/
 public class HideTreasureFrag extends Fragment {
-    private MainActivity main;
+
     private TextView tv_category;
     private String[] treasureCategory;
 
@@ -342,7 +342,7 @@ public class HideTreasureFrag extends Fragment {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(getContext().getApplicationContext());
         // 서버에 요청할 주소
-        String url = main.mainHost+"addtreasure";
+        String url = "http://192.168.21.252:5013/addtreasure";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
