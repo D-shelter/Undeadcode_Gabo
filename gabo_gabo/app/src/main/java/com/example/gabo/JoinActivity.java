@@ -42,7 +42,6 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.Volley;
 
 public class JoinActivity extends AppCompatActivity {
-    private MainActivity main;
     // 실제로 해당 Server에 요청을 하는 객체
     private RequestQueue queue;
     // 요청할 때 필요한 요청사항을 기록하는 객체
@@ -504,7 +503,7 @@ public class JoinActivity extends AppCompatActivity {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this);
         // 서버에 요청할 주소
-        String url = main.mainHost+"join";
+        String url = "http://192.168.21.196:5013/join";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳

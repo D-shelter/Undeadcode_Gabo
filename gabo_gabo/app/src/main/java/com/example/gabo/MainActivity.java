@@ -55,7 +55,6 @@ import java.util.TimerTask;
 
 //메인 액티비티
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
-    protected String mainHost = "http://192.168.21.252:5013/";
     private NaverMap naverMap;
     private FusedLocationSource locationSource;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
@@ -288,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getApplicationContext());
         // 서버에 요청할 주소
-        String url = mainHost+"mappage";
+        String url = "http://192.168.21.196:5013/mappage";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
@@ -371,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getApplicationContext());
         // 서버에 요청할 주소
-        String url = mainHost+"clicktrs";
+        String url = "http://192.168.21.196:5013/clicktrs";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
