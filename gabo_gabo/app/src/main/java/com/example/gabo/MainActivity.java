@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // 보물정보창 여닫이
     private boolean t_info = false;
 
+    private String user_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +86,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //LoginActivity 에서 ID값 가져오기
         Intent intent = getIntent();
-        String user_id = intent.getStringExtra("id");
+        user_id = intent.getStringExtra("id");
+
+
+
+
+
 
         //기본상단바 안보이게 하기
         ActionBar actionBar = getSupportActionBar();
@@ -154,6 +161,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     sendRequest1();
 
                 }else if (selectId==R.id.page4){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_id",user_id);
+                    mypageFrag = new mypageFrag();
+                    mypageFrag.setArguments(bundle);
+
                     fm.beginTransaction().replace(R.id.frame,mypageFrag).commit();
 //                    bottomDialog.show(fm,"Test");
                 }
