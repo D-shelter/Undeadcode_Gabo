@@ -72,10 +72,10 @@ public class pwFind extends AppCompatActivity {
                 Log.v("resultValue", response);
                 String[] info = response.split(",");
                 System.out.println(info[0]);
-                System.out.println(edt_login_email.getText().toString());
-                if (info[0].equals(edt_login_email.getText().toString())){
+                System.out.println(edt_find_Name.getText().toString());
+                if (info[0].equals(edt_find_Name.getText().toString())){
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                    intent.putExtra("id",edt_login_email.getText().toString());
+                    intent.putExtra("id",edt_find_Name.getText().toString());
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(),"ID 또는 PW가 틀렸습니다.",Toast.LENGTH_LONG).show();
