@@ -60,9 +60,8 @@ public class idFind extends AppCompatActivity{
                 sendRequest();
 
             }
-            });
+        });
     }
-
             private void sendRequest() {
                 queue = Volley.newRequestQueue(this);
                 String url = main.mainHost+"findID";
@@ -109,10 +108,10 @@ public class idFind extends AppCompatActivity{
                         return params;
                     }
                 };
-                String TAG = "leejh";
-                stringRequest2.setTag(TAG);
-                queue.add(stringRequest2);
-            }
 
-        }
+        String TAG = "leejh";
+        stringRequest2.setTag(TAG);
+        queue.add(stringRequest2);
+    }
 
+}

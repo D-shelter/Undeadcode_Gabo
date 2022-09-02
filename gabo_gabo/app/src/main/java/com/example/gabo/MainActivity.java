@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // 보물정보창 여닫이
     private boolean t_info = false;
 
+    private String user_id;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +164,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     sendRequest1();
 
                 }else if (selectId==R.id.page4){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_id",user_id);
+                    mypageFrag = new mypageFrag();
+                    mypageFrag.setArguments(bundle);
+
                     fm.beginTransaction().replace(R.id.frame,mypageFrag).commit();
 //                    bottomDialog.show(fm,"Test");
                 }
@@ -171,8 +179,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         sendRequest1();
 
         /** 처음 바텀 적용
-        BottomNavigationView bottom_btn = findViewById(R.id.page3);
-        bottom_btn.performClick();
+         BottomNavigationView bottom_btn = findViewById(R.id.page3);
+         bottom_btn.performClick();
          */
 
 
@@ -293,16 +301,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onResponse(String response) {
                 Log.v("resultValue", response);
                 String[] info = response.split("/");
-                System.out.println(info.length);
+                //System.out.println(info.length);
                 for (int i = 0; i < info.length; i++) {
-                    System.out.println(info[i]);
+                    //System.out.println(info[i]);
                     for (int j = 0; j <info[i].length();j++){
                         String [] info2 = info[i].split(",");
                         // 찾은 유저가 있으면 마커표시 안함
                         if (info2[6].equals("null")){ break; }
                         // 승인 안됐으면 마커표시 안함
                         if (info2[7].equals("0")){break;}
-                        
+
                         double lati = Double.valueOf(info2[8]);
                         double longi = Double.valueOf(info2[9]);
                         Marker marker = new Marker();
@@ -446,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         queue.add(stringRequest);
 
 
-        }
+    }
 
 
 }
