@@ -48,7 +48,7 @@ import java.util.Map;
 /*-------------------핀 선택시 뜨는 유저 댓글 바텀시트 프래그먼트 --------------------------*/
 
 public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
-
+    private MainActivity main;
     BottomSheetBehavior bBehavior;
     private NaverMap naverMap;
 
@@ -317,7 +317,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(getContext().getApplicationContext());
         // 서버에 요청할 주소
-        String url = "http://192.168.21.196:5013/commentlist";
+        String url = main.mainHost+"commentlist";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
