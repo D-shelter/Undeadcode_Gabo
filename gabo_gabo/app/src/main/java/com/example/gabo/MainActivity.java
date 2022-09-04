@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getApplicationContext());
         // 서버에 요청할 주소
-        String url = "http://192.168.21.196:5013/mappage";
+        String url = "http://192.168.45.230:5013/mappage";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
@@ -370,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getApplicationContext());
         // 서버에 요청할 주소
-        String url = "http://192.168.21.196:5013/clicktrs";
+        String url = "http://192.168.45.230:5013/clicktrs";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳

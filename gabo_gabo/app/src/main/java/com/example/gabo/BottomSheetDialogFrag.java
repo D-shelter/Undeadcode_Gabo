@@ -317,7 +317,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(getContext().getApplicationContext());
         // 서버에 요청할 주소
-        String url = main.mainHost+"commentlist";
+        String url = "http://192.168.45.230:5013/commentlist";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
