@@ -57,21 +57,22 @@ public class idFind extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 sendRequest();
-
             }
         });
     }
             private void sendRequest() {
                 queue = Volley.newRequestQueue(this);
-                String url = "http://192.168.21.196:5013/findID";
+                String url = "http://192.168.21.112:5013/findID";
                 StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     // 응답데이터를 받아오는 곳
                     @Override
                     public void onResponse(String response) {
                         Log.v("resultValue", response);
-                        String[] info = response.split(",");
+                        String[] info  = response.split(",");
                         Intent intent = new Intent(getApplicationContext(), idReceive.class);
-                        intent.putExtra("data",info);
+                        intent.putExtra("id",info[0]);
+                        intent.putExtra("name",info[1]);
+                        intent.putExtra("startDate",info[2]);
                         startActivity(intent);
                         finish();
                     }

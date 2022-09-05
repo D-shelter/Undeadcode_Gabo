@@ -27,11 +27,15 @@ public class idReceive extends AppCompatActivity {
         tv_Receive_name = findViewById(R.id.tv_Receive_name);
         tv_Receive_email = findViewById(R.id.tv_Receive_email);
         tv_Receive_member = findViewById(R.id.tv_Receive_member);
+
         Intent getstr = getIntent();
-        String data = getstr.getStringExtra("data");
-        tv_Receive_name.setText(data + " 님의 계정은");
-        tv_Receive_email.setText(data + " 입니다");
-        tv_Receive_member.setText("(가입일 : " +data+")");
+        String id = getstr.getStringExtra("id");
+        String name = getstr.getStringExtra("name");
+        String startDate =  getstr.getStringExtra("startDate");
+
+        tv_Receive_name.setText(name + " 님의 계정은");
+        tv_Receive_email.setText(id + " 입니다");
+        tv_Receive_member.setText("(가입일 : " +startDate+")");
 
 
         btn_Receive_pw.setOnClickListener(new View.OnClickListener() {
