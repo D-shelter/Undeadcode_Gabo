@@ -77,9 +77,9 @@
         android:textAlignment="center"
         android:textColor="#0d6adb"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_pw"
+        app:layout_constraintEnd_toEndOf="@+id/edt_change_Pw2"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_pw"
+        app:layout_constraintStart_toStartOf="@+id/edt_change_Pw2"
         app:layout_constraintTop_toBottomOf="@+id/edt_id" />
 
     <TextView
@@ -89,9 +89,9 @@
         android:textAlignment="center"
         android:textColor="#0d6adb"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_pwch"
-        app:layout_constraintStart_toStartOf="@+id/edt_pwch"
-        app:layout_constraintTop_toBottomOf="@+id/edt_pwch" />
+        app:layout_constraintEnd_toEndOf="@+id/edt_change_Pw1"
+        app:layout_constraintStart_toStartOf="@+id/edt_change_Pw1"
+        app:layout_constraintTop_toBottomOf="@+id/edt_change_Pw1" />
 
     <TextView
         android:id="@+id/tv_check_email"
@@ -101,10 +101,10 @@
         android:textAlignment="center"
         android:textColor="#0d6adb"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_pwch"
+        app:layout_constraintEnd_toEndOf="@+id/edt_change_Pw1"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_pwch"
-        app:layout_constraintTop_toBottomOf="@+id/edt_pwch" />
+        app:layout_constraintStart_toStartOf="@+id/edt_change_Pw1"
+        app:layout_constraintTop_toBottomOf="@+id/edt_change_Pw1" />
 
     <TextView
         android:id="@+id/tv_check_phone"
@@ -138,10 +138,10 @@
         android:textAlignment="center"
         android:textColor="#0d6adb"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_pwch"
+        app:layout_constraintEnd_toEndOf="@+id/edt_change_Pw1"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_pwch"
-        app:layout_constraintTop_toBottomOf="@+id/edt_pwch" />
+        app:layout_constraintStart_toStartOf="@+id/edt_change_Pw1"
+        app:layout_constraintTop_toBottomOf="@+id/edt_change_Pw1" />
 
     <TextView
         android:id="@+id/tv_check_gender"
@@ -164,10 +164,10 @@
         android:textAlignment="center"
         android:textColor="#0d6adb"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_pwch"
+        app:layout_constraintEnd_toEndOf="@+id/edt_change_Pw1"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_pwch"
-        app:layout_constraintTop_toBottomOf="@+id/edt_pwch" />
+        app:layout_constraintStart_toStartOf="@+id/edt_change_Pw1"
+        app:layout_constraintTop_toBottomOf="@+id/edt_change_Pw1" />
 
     <EditText
         android:id="@+id/edt_name"
@@ -228,7 +228,7 @@
         app:layout_constraintVertical_bias="0.842" />
 
     <EditText
-        android:id="@+id/edt_pw"
+        android:id="@+id/edt_change_Pw2"
         android:layout_width="315dp"
         android:layout_height="48dp"
         android:ems="10"
@@ -243,7 +243,7 @@
         app:layout_constraintVertical_bias="0.29" />
 
     <EditText
-        android:id="@+id/edt_pwch"
+        android:id="@+id/edt_change_Pw1"
         android:layout_width="315dp"
         android:layout_height="48dp"
         android:ems="10"
@@ -352,7 +352,7 @@
     </RadioGroup>
 
     <ImageView
-        android:id="@+id/setImage"
+        android:id="@+id/pwreciveimg2"
         android:layout_width="31dp"
         android:layout_height="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -364,7 +364,7 @@
         app:srcCompat="@drawable/join_check_on" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/pwreciveimg1"
         android:layout_width="25dp"
         android:layout_height="31dp"
         app:layout_constraintBottom_toBottomOf="parent"

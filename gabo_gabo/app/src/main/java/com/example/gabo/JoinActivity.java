@@ -107,15 +107,15 @@ public class JoinActivity extends AppCompatActivity {
         mainhost = intent.getStringExtra("mainhost");
         System.out.println("주소"+mainhost);
 
-        edt_pw = findViewById(R.id.edt_pw);
-        edt_pwch = findViewById(R.id.edt_pwch);
-        setImage = findViewById(R.id.setImage);
+        edt_pw = findViewById(R.id.edt_change_Pw2);
+        edt_pwch = findViewById(R.id.edt_change_Pw1);
+        setImage = findViewById(R.id.pwreciveimg2);
 
         edt_id = findViewById(R.id.edt_id);
-        edt_pw = findViewById(R.id.edt_pw);
+        edt_pw = findViewById(R.id.edt_change_Pw2);
         edt_nick = findViewById(R.id.edt_nick);
         edt_phone = findViewById(R.id.edt_phone);
-        edt_pwch = findViewById(R.id.edt_pwch);
+        edt_pwch = findViewById(R.id.edt_change_Pw1);
         edt_mail = findViewById(R.id.edt_mail);
         edt_name = findViewById(R.id.edt_name);
         edt_join_year = findViewById(R.id.edt_join_year);
