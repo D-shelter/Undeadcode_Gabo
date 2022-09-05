@@ -52,6 +52,8 @@ public class mypageFrag extends Fragment {
     private RequestQueue queue;
     private StringRequest stringRequest;
 
+    private String mainhost;
+
 
 
 
@@ -61,6 +63,8 @@ public class mypageFrag extends Fragment {
         View view = inflater.inflate(R.layout.mypage_lyt,container,false);
 
         fmm=getActivity().getSupportFragmentManager();
+
+        mainhost = getArguments().getString("mainhost");
 
 
         /*---------내가찾은보물 열기-----------*/
@@ -122,7 +126,7 @@ public class mypageFrag extends Fragment {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getActivity());
         // 서버에 요청할 주소
-        String url = "http://192.168.21.252:5013/mypage";
+        String url = mainhost+"mypage";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
@@ -134,6 +138,9 @@ public class mypageFrag extends Fragment {
                 String findtrs = res[1];
                 String like = res[2];
                 String level = res[3];
+                if (like.equals("None")){
+                    like = "0";
+                }
 
                 String user_id;
                 user_id = getArguments().getString("user_id");

@@ -394,6 +394,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String longitude = info[7];
                 String hidedate = info[8].substring(2,16);
                 String like = info[9];
+                if (like.equals("None")){
+                    like = "0";
+                }
 
                 Bundle bundle = new Bundle();
                 bundle.putString("userid",user_id);
