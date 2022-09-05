@@ -94,11 +94,12 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         /*바텀시트 라운드 투명배경을 위한 스타일 설정*/
+
         setStyle(
                 STYLE_NORMAL,R.style.TransparentBottomSheetDialogFragment
 
-
         );
+
 
     }
 
@@ -149,29 +150,17 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         ti_tv_when.setText(hidedate+"에 숨김");
         ti_tv_like.setText(like);
 
-        sendRequest();
+
 
 
         bottomSheetDialogFrag = new BottomSheetDialogFrag();
+        sendRequest_like_check();
 
         /*---------------------하뚜 클릭--------------------- */
         ti_img_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendRequest_like();
-            }
-        });
-
-
-
-        /*---------------------찾았다 버튼--------------------- */
-        btn_find = view.findViewById(R.id.btn_find);
-        btn_find.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Toast.makeText(getContext().getApplicationContext(),"찾았다!",Toast.LENGTH_SHORT).show();
-//                openWinDialog();
-                openquizDialog();
             }
         });
 
@@ -328,19 +317,140 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
 
     }
 
-    public void sendRequest() {
+    // 좋아요 확인
+    public void sendRequest_like_check() {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(getContext().getApplicationContext());
         // 서버에 요청할 주소
-        String url = mainhost+"commentlist";
+        String url = mainhost+"like_check";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
             @Override
             public void onResponse(String response) {
                 Log.v("resultValue", response);
-                comments.add(response);
-                System.out.println("어디보자"+comments.get(0));
+                System.out.println("값" + response);
+                if (response.equals("1")){
+                    ti_img_like.setImageResource(R.drawable.like_full);
+                } else if (response.equals("0")){
+                    ti_img_like.setImageResource(R.drawable.like_blank);
+                }
+            }
+        }, new Response.ErrorListener() {
+            // 서버와의 연동 에러시 출력
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            // 보낼 데이터를 저장하는 곳
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+//                System.out.println("숨긴유저"+hideuser);
+                params.put("user_id",user_id);
+                params.put("hide_user", hideuser);
+
+                return params;
+            }
+        };
+
+
+        String Tag = "LJY";
+        stringRequest.setTag(Tag);
+        queue.add(stringRequest);
+
+
+    }
+
+    // 좋아요 클릭
+    public void sendRequest_like() {
+        // Volley Lib 새로운 요청객체 생성
+        queue = Volley.newRequestQueue(getContext().getApplicationContext());
+        // 서버에 요청할 주소
+        String url = mainhost+"like_check";
+        // 요청 문자열 저장
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            // 응답데이터를 받아오는 곳
+            @Override
+            public void onResponse(String response) {
+                Log.v("resultValue", response);
+                if (response.equals("1")){
+                    sendRequest_like_down();
+                } else if (response.equals("0")){
+                    sendRequest_like_up();
+                }
+            }
+        }, new Response.ErrorListener() {
+            // 서버와의 연동 에러시 출력
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            // 보낼 데이터를 저장하는 곳
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+//                System.out.println("숨긴유저"+hideuser);
+                params.put("user_id",user_id);
+                params.put("hide_user", hideuser);
+
+                return params;
+            }
+        };
+
+
+        String Tag = "LJY";
+        stringRequest.setTag(Tag);
+        queue.add(stringRequest);
+
+
+    }
+    // 좋아요 up
+    public void sendRequest_like_up() {
+        // Volley Lib 새로운 요청객체 생성
+        queue = Volley.newRequestQueue(getContext().getApplicationContext());
+        // 서버에 요청할 주소
+        String url = mainhost+"like_up";
+        // 요청 문자열 저장
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            // 응답데이터를 받아오는 곳
+            @Override
+            public void onResponse(String response) {
+                Log.v("resultValue", response);
+                int like = Integer.parseInt(ti_tv_like.getText().toString());
+                like += 1;
+                ti_img_like.setImageResource(R.drawable.like_full);
+                ti_tv_like.setText(like+"");
 
             }
         }, new Response.ErrorListener() {
@@ -369,6 +479,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
 //                System.out.println("숨긴유저"+hideuser);
+                params.put("user_id",user_id);
                 params.put("hide_user", hideuser);
 
                 return params;
@@ -382,21 +493,22 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
 
 
     }
-
-    public void sendRequest_like() {
+    // 좋아요 Down
+    public void sendRequest_like_down() {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(getContext().getApplicationContext());
         // 서버에 요청할 주소
-        System.out.println(mainhost);
-        String url = mainhost+"like";
+        String url = mainhost+"like_down";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
             @Override
             public void onResponse(String response) {
                 Log.v("resultValue", response);
-
-
+                int like = Integer.parseInt(ti_tv_like.getText().toString());
+                like -= 1;
+                ti_img_like.setImageResource(R.drawable.like_blank);
+                ti_tv_like.setText(like+"");
             }
         }, new Response.ErrorListener() {
             // 서버와의 연동 에러시 출력
