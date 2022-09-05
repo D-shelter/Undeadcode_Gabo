@@ -2,33 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.gabo">
-
     <!-- DB통신 사용권한 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- 위치추적 사용권한 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 위치추적 사용권한 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!--카메라 사용하기 위한 기능 요청-->
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
-    <!--촬영한 원본 사진 저장을 위한 기능 요청-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 카메라 사용하기 위한 기능 요청 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" /> <!-- 촬영한 원본 사진 저장을 위한 기능 요청 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_gabo"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_gabo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.gabo"
         tools:targetApi="31">
         <activity
-            android:name="com.example.gabo.JoinActivity"
+            android:name=".JoinActivity"
             android:exported="false" />
         <activity
             android:name=".idFind"
@@ -43,21 +38,20 @@
             android:name=".pwReceive"
             android:exported="false" />
         <activity
-            android:name="com.example.gabo.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.gabo.StartActivity"
+            android:name=".StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.gabo.MainActivity"
-            android:exported="false">
-        </activity>
-
+            android:name=".MainActivity"
+            android:exported="false"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -68,6 +62,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="nww1ikjspq" />
