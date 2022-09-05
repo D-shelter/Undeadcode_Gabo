@@ -79,16 +79,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private String user_id;
 
-
+    private String mainhost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         //LoginActivity 에서 ID값 가져오기
         Intent intent = getIntent();
         user_id = intent.getStringExtra("id");
+        mainhost = intent.getStringExtra("mainhost");
 
         //기본상단바 안보이게 하기
         ActionBar actionBar = getSupportActionBar();
@@ -142,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Bundle bundle = new Bundle();
                     bundle.putString("user_id",user_id);
                     bundle.putString("user_location",user_location);
+                    bundle.putString("mainhost",mainhost);
                     fragmHideTreasure.setArguments(bundle);
                     System.out.println(user_location);
                     fm.beginTransaction().replace(R.id.frame,fragmHideTreasure).commit();
@@ -162,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }else if (selectId==R.id.page4){
                     Bundle bundle = new Bundle();
                     bundle.putString("user_id",user_id);
+                    bundle.putString("mainhost",mainhost);
                     mypageFrag = new mypageFrag();
                     mypageFrag.setArguments(bundle);
 
@@ -287,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getApplicationContext());
         // 서버에 요청할 주소
-        String url = "http://192.168.45.230:5013/mappage";
+        String url = mainhost +"mappage";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
@@ -370,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getApplicationContext());
         // 서버에 요청할 주소
-        String url = "http://192.168.45.230:5013/clicktrs";
+        String url = mainhost+"clicktrs";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳

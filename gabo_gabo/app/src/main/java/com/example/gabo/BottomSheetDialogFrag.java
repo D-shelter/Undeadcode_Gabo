@@ -85,6 +85,8 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
 
     private ArrayList<String> comments;
 
+    private String mainhost;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,6 +116,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         hidedate = getArguments().getString("hidedate","0");
         like = getArguments().getString("like","0");
         user_location = getArguments().getString("userlocation");
+        mainhost = getArguments().getString("mainhost");
 
         String[] user_lo = user_location.split(",");
         Double user_latitude = Double.parseDouble(user_lo[0]);
@@ -317,7 +320,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(getContext().getApplicationContext());
         // 서버에 요청할 주소
-        String url = "http://192.168.45.230:5013/commentlist";
+        String url = mainhost+"commentlist";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳

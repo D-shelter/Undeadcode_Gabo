@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button btn_login_signin, btn_login_signup, btn_id_Find, btn_pw_Find;
     private RequestQueue queue;
     private StringRequest stringRequest;
+    private final String mainhost = "http://192.168.21.8:5013/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
+                intent.putExtra("mainhost",mainhost);
                 startActivity(intent);
             }
         });
@@ -61,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), idFind.class);
+                intent.putExtra("mainhost",mainhost);
                 startActivity(intent);
             }
         });
@@ -69,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), pwFind.class);
+                intent.putExtra("mainhost",mainhost);
                 startActivity(intent);
             }
         });
@@ -87,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this);
         // 서버에 요청할 주소
-        String url = "http://192.168.45.230:5013/login";
+        String url = mainhost+"login";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
@@ -95,11 +100,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.v("resultValue", response);
                 String[] info = response.split(",");
-                System.out.println(info[0]);
-                System.out.println(edt_login_email.getText().toString());
+//                System.out.println(info[0]);
+//                System.out.println(edt_login_email.getText().toString());
                 if (info[0].equals(edt_login_email.getText().toString())){
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     intent.putExtra("id",edt_login_email.getText().toString());
+                    intent.putExtra("mainhost",mainhost);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(),"ID 또는 PW가 틀렸습니다.",Toast.LENGTH_LONG).show();

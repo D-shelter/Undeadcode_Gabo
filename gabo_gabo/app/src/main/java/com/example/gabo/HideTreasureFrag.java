@@ -98,7 +98,7 @@ public class HideTreasureFrag extends Fragment {
     private RequestQueue queue;
     private StringRequest stringRequest;
 
-
+    private String mainhost;
 
 
     @Nullable
@@ -112,7 +112,7 @@ public class HideTreasureFrag extends Fragment {
         iv_UserPhoto = view.findViewById(R.id.iv_UserPhoto);
         tv_picadd = view.findViewById(R.id.tv_picadd);
 
-        // bundle을 이용해서 액티비티에서 변수값 받기
+        mainhost = getArguments().getString("mainhost");
 
 
 
@@ -342,7 +342,7 @@ public class HideTreasureFrag extends Fragment {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(getContext().getApplicationContext());
         // 서버에 요청할 주소
-        String url = "http://192.168.21.252:5013/addtreasure";
+        String url = mainhost+"addtreasure";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
