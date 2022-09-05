@@ -73,7 +73,7 @@ public class pwReceive extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
         // 서버에 요청할 주소
 
-        String url = "http://192.168.21.112:5013/changePW";
+        String url = "http://192.168.21.8:5013/changePW";
 
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

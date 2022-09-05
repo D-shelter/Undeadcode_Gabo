@@ -73,7 +73,7 @@ public class pwFind extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
         // 서버에 요청할 주소
 
-        String url = "http://192.168.21.112:5013/findPW";
+        String url = "http://192.168.21.8:5013/findPW";
 
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

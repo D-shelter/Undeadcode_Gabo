@@ -62,7 +62,7 @@ public class idFind extends AppCompatActivity{
     }
             private void sendRequest() {
                 queue = Volley.newRequestQueue(this);
-                String url = "http://192.168.21.112:5013/findID";
+                String url = "http://192.168.21.8:5013/findID";
                 StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     // 응답데이터를 받아오는 곳
                     @Override
