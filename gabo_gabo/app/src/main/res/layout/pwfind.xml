@@ -50,7 +50,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/edt_find_Name"
+                android:id="@+id/edt_findPW_name"
                 android:layout_width="350dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
@@ -74,7 +74,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/edt_find_Email"
+                android:id="@+id/edt_findPW_mail"
                 android:layout_width="350dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
@@ -87,7 +87,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/tv_find_Email"
+                android:id="@+id/tv_find_email"
                 android:layout_width="350dp"
                 android:layout_height="54dp"
                 android:layout_gravity="center"
@@ -98,7 +98,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/btn_join_Account"
+                android:id="@+id/btn_findPw_pw"
                 android:layout_width="350dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"

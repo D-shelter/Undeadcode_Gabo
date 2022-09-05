@@ -33,6 +33,7 @@ public class idFind extends AppCompatActivity{
     private RequestQueue queue;
     private StringRequest stringRequest;
     private String info;
+    private String mainhost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,10 @@ public class idFind extends AppCompatActivity{
         edt_Find_phone = findViewById(R.id.edt_Find_phone);
         tv_Find_name = findViewById(R.id.tv_Find_name);
         tv_Find_phone = findViewById(R.id.tv_Find_phone);
+
+        Intent intent = getIntent();
+        mainhost = intent.getStringExtra("mainhost");
+
         btn_Find_pw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,15 +68,17 @@ public class idFind extends AppCompatActivity{
     }
             private void sendRequest() {
                 queue = Volley.newRequestQueue(this);
-                String url = "http://192.168.21.196:5013/findID";
+                String url = mainhost+"findID";
                 StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     // 응답데이터를 받아오는 곳
                     @Override
                     public void onResponse(String response) {
                         Log.v("resultValue", response);
-                        String[] info = response.split(",");
+                        String[] info  = response.split(",");
                         Intent intent = new Intent(getApplicationContext(), idReceive.class);
-                        intent.putExtra("data",info);
+                        intent.putExtra("id",info[0]);
+                        intent.putExtra("name",info[1]);
+                        intent.putExtra("startDate",info[2]);
                         startActivity(intent);
                         finish();
                     }

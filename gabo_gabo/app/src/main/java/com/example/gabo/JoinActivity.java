@@ -57,6 +57,7 @@ public class JoinActivity extends AppCompatActivity {
     private Spinner sp_month;
     private String gender=null;
     private String join_id,join_pw,join_nick,join_phone,join_mail,join_name,join_year,join_day,join_month,join_birth;
+    private String mainhost;
 
 
     @Override
@@ -101,6 +102,10 @@ public class JoinActivity extends AppCompatActivity {
         for (int i = 1; i<=31; i++){
             days.add(String.valueOf(i));
         }
+
+        Intent intent = getIntent();
+        mainhost = intent.getStringExtra("mainhost");
+        System.out.println("주소"+mainhost);
 
         edt_pw = findViewById(R.id.edt_pw);
         edt_pwch = findViewById(R.id.edt_pwch);
@@ -503,7 +508,7 @@ public class JoinActivity extends AppCompatActivity {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this);
         // 서버에 요청할 주소
-        String url = "http://192.168.21.196:5013/join";
+        String url = mainhost+"join";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳

@@ -28,9 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class pwFind extends AppCompatActivity {
-    private Button btn_find_Id, btn_find_Pw, btn_join_Account;
-    private EditText edt_find_Name, edt_find_Email;
-    private TextView tv_find_Name, tv_find_Email3;
+    private Button btn_find_Id, btn_find_Pw, btn_findPw_pw;
+    private EditText edt_findPw_name, edt_findPw_mail;
+    private TextView tv_find_name, tv_find_email;
 
     private RequestQueue queue;
     private StringRequest stringRequest;
@@ -43,13 +43,13 @@ public class pwFind extends AppCompatActivity {
         setContentView(R.layout.pwfind);
         btn_find_Id = findViewById(R.id.btn_find_Id);
         btn_find_Pw = findViewById(R.id.btn_find_Pw);
-        btn_join_Account = findViewById(R.id.btn_join_Account);
-        edt_find_Name = findViewById(R.id.edt_find_Name);
-        edt_find_Email = findViewById(R.id.edt_find_Email);
-        tv_find_Name = findViewById(R.id.tv_find_Name);
-        tv_find_Email3 = findViewById(R.id.tv_find_Email);
+        btn_findPw_pw = findViewById(R.id.btn_findPw_pw);
+        edt_findPw_name = findViewById(R.id.edt_findPW_name);
+        edt_findPw_mail = findViewById(R.id.edt_findPW_mail);
+        tv_find_name = findViewById(R.id.tv_find_Name);
+        tv_find_email = findViewById(R.id.tv_find_email);
 
-        //아이디 찾기 기능
+        //아이디 찾기 페이지로 이동
         btn_find_Id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +57,15 @@ public class pwFind extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 비밀번호 찾기 기능
+        btn_findPw_pw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendRequest();
+            }
+        });
+
     }
 
     public void sendRequest() {
@@ -64,7 +73,7 @@ public class pwFind extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
         // 서버에 요청할 주소
 
-        String url = "http://192.168.21.196:5013/findPw";
+        String url = "http://192.168.21.8:5013/findPW";
 
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -73,14 +82,16 @@ public class pwFind extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.v("resultValue", response);
                 String[] info = response.split(",");
-                System.out.println(info[0]);
-                System.out.println(edt_find_Name.getText().toString());
-                if (info[0].equals(edt_find_Name.getText().toString())){
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                    intent.putExtra("id",edt_find_Name.getText().toString());
+                System.out.println("결과는"+ info[0]);
+                String putName = edt_findPw_name.getText().toString();
+                String putMail = edt_findPw_mail.getText().toString();
+                if (info[0].equals(putName) && info[1].equals(putMail)){
+                    Intent intent = new Intent(getApplicationContext(),pwReceive.class);
+                    intent.putExtra("name",putName);
+                    intent.putExtra("mail",putMail);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(),"ID 또는 PW가 틀렸습니다.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"입력하신 정보를 다시 한 번 확인해 주세요..",Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -108,8 +119,8 @@ public class pwFind extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                String name = edt_find_Name.getText().toString();
-                String email = edt_find_Email.getText().toString();
+                String name = edt_findPw_name.getText().toString();
+                String email = edt_findPw_mail.getText().toString();
 
                 params.put("name", name);
                 params.put("email", email);

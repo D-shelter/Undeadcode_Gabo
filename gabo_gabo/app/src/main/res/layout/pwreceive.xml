@@ -60,7 +60,7 @@
                 android:textSize="18dp" />
 
             <EditText
-                android:id="@+id/edt_receive_Password"
+                android:id="@+id/edt_change_pw1"
                 android:layout_width="350dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -89,7 +89,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/edt_receive_Password_check"
+                android:id="@+id/edt_change_pw2"
                 android:layout_width="350dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -114,7 +114,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/btn_receive_Change"
+                android:id="@+id/btn_change_pw"
                 android:layout_width="350dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
