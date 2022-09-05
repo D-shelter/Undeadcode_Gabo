@@ -87,6 +87,8 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
 
     private String mainhost;
 
+    private String user_id;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,6 +108,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         // 메인액티비티에서 서버 리스폰 받아서 가져옴
+        user_id = getArguments().getString("userid");
         cate = getArguments().getString("cate");
         key1 =getArguments().getString("key1","0");
         key2 = getArguments().getString("key2","0");
@@ -150,6 +153,15 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
 
 
         bottomSheetDialogFrag = new BottomSheetDialogFrag();
+
+        /*---------------------하뚜 클릭--------------------- */
+        ti_img_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendRequest_like();
+            }
+        });
+
 
 
         /*---------------------찾았다 버튼--------------------- */
@@ -357,6 +369,61 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
 //                System.out.println("숨긴유저"+hideuser);
+                params.put("hide_user", hideuser);
+
+                return params;
+            }
+        };
+
+
+        String Tag = "LJY";
+        stringRequest.setTag(Tag);
+        queue.add(stringRequest);
+
+
+    }
+
+    public void sendRequest_like() {
+        // Volley Lib 새로운 요청객체 생성
+        queue = Volley.newRequestQueue(getContext().getApplicationContext());
+        // 서버에 요청할 주소
+        String url = mainhost+"like";
+        // 요청 문자열 저장
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            // 응답데이터를 받아오는 곳
+            @Override
+            public void onResponse(String response) {
+                Log.v("resultValue", response);
+
+
+            }
+        }, new Response.ErrorListener() {
+            // 서버와의 연동 에러시 출력
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            // 보낼 데이터를 저장하는 곳
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+//                System.out.println("숨긴유저"+hideuser);
+                params.put("user_id",user_id);
                 params.put("hide_user", hideuser);
 
                 return params;

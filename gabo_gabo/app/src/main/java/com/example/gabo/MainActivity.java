@@ -396,6 +396,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String like = info[9];
 
                 Bundle bundle = new Bundle();
+                bundle.putString("userid",user_id);
                 bundle.putString("cate",cate);
                 bundle.putString("key1",key1);
                 bundle.putString("key2",key2);
