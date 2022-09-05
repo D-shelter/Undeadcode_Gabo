@@ -134,8 +134,8 @@ public class mypageFrag extends Fragment {
             public void onResponse(String response) {
                 Log.v("resultValue",response);
                 String[] res = response.split(",");
-                String hidetrs = res[0];
-                String findtrs = res[1];
+                String hidetrs = res[1];
+                String findtrs = res[0];
                 String like = res[2];
                 String level = res[3];
                 if (like.equals("None")){
