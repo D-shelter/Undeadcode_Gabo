@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -98,6 +99,8 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     private Timer timer;
     private int cnt = 0;
 
+    private Button comment_submit_btn;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -151,6 +154,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         ti_tv_when = view.findViewById(R.id.ti_tv_when);
         ti_img_like = view.findViewById(R.id.ti_img_like);
         ti_tv_like = view.findViewById(R.id.ti_tv_like);
+        comment_submit_btn = view.findViewById(R.id.comment_submit_btn);
 
         ti_tv_comment.setText(hideuser);
         ti_tv_tag1.setText("#"+key1);
@@ -313,6 +317,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
                     findquizDailog.dismiss();
                 } else {
                     //틀렸습니다. 다이얼로그 띄우기
+                    openquizfailDialog();
                     TimerTask timerTask = new TimerTask() {
                         @Override
                         public void run() {
@@ -333,6 +338,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
                     findquizDailog.dismiss();
                 } else {
                     //틀렸습니다. 다이얼로그 띄우기
+                    openquizfailDialog();
                     cnt = 0;
                     TimerTask timerTask = new TimerTask() {
                         @Override
@@ -354,6 +360,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
                     findquizDailog.dismiss();
                 } else {
                     //틀렸습니다. 다이얼로그 띄우기
+                    openquizfailDialog();
                     cnt = 0;
                     TimerTask timerTask = new TimerTask() {
                         @Override
@@ -395,10 +402,10 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 win_dialog.dismiss();
                 btn_find.setText("코멘트 남기기");
-                btn_find.setOnClickListener(new View.OnClickListener() {
+                comment_submit_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getContext(), "코멘트남기기 화면으로 넘어가기", Toast.LENGTH_SHORT).show();
+                        sendcomment();
                     }
                 });
             }
@@ -623,6 +630,65 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
                 like -= 1;
                 ti_img_like.setImageResource(R.drawable.like_blank);
                 ti_tv_like.setText(like+"");
+            }
+        }, new Response.ErrorListener() {
+            // 서버와의 연동 에러시 출력
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            // 보낼 데이터를 저장하는 곳
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+//                System.out.println("숨긴유저"+hideuser);
+                params.put("user_id",user_id);
+                params.put("hide_user", hideuser);
+
+                return params;
+            }
+        };
+
+
+        String Tag = "LJY";
+        stringRequest.setTag(Tag);
+        queue.add(stringRequest);
+
+
+    }
+
+    // 코멘트 남기기
+    public void sendcomment() {
+        // Volley Lib 새로운 요청객체 생성
+        queue = Volley.newRequestQueue(getContext().getApplicationContext());
+        // 서버에 요청할 주소
+        String url = mainhost+"addcomment";
+        // 요청 문자열 저장
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            // 응답데이터를 받아오는 곳
+            @Override
+            public void onResponse(String response) {
+                Log.v("resultValue", response);
+                if (response.equals("1")){
+                    sendRequest_like_down();
+                } else if (response.equals("0")){
+                    sendRequest_like_up();
+                }
             }
         }, new Response.ErrorListener() {
             // 서버와의 연동 에러시 출력

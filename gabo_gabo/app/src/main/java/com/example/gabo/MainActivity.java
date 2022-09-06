@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     for (int j = 0; j <info[i].length();j++){
                         String [] info2 = info[i].split(",");
                         // 찾은 유저가 있으면 마커표시 안함
-                        if (info2[6].equals("null")){ break; }
+                        if (!info2[6].equals("None")){ break; }
                         // 승인 안됐으면 마커표시 안함
                         if (info2[7].equals("0")){break;}
 
