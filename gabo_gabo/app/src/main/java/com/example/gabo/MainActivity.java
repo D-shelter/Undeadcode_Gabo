@@ -403,6 +403,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 Bundle bundle = new Bundle();
+                bundle.putString("t_id",t_id);
                 bundle.putString("mainhost",mainhost);
                 bundle.putString("userid",user_id);
                 bundle.putString("cate",cate);

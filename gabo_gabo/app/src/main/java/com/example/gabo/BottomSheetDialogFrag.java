@@ -57,7 +57,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     private NaverMap naverMap;
 
     private ListView tc_list;
-    private trsCommentAdapter tcAdapter = new trsCommentAdapter();
+    private trsCommentAdapter tcAdapter;
 
     //위치안내버튼
     private TextView btn_howtogo;
@@ -74,7 +74,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     private TextView ti_tv_tag1, ti_tv_tag2, ti_tv_tag3;
 
     // 메인엑티비티에서 번들로 가져온값을 저장하려고 만듬
-    private String cate,key1,key2,key3,hideuser,latitude,longitude,hidedate,like,user_location;
+    private String t_id,cate,key1,key2,key3,hideuser,latitude,longitude,hidedate,like,user_location;
 
     //trs_comment_bottom_sheet_lyt 레이아웃에서 변경한 값을 넣어줄 아이디를 넣어줄 변수
     private TextView ti_tv_when,ti_tv_like;
@@ -100,7 +100,12 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     private int cnt = 0;
 
     private Button comment_submit_btn;
+    private TextView t_comment;
+    private String comment;
 
+    private String list_finddate, list_finduser, list_key1, list_key2, list_key3, list_comment, list_like;
+
+    View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,6 +126,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         // 메인액티비티에서 서버 리스폰 받아서 가져옴
+        t_id = getArguments().getString("t_id");
         user_id = getArguments().getString("userid");
         cate = getArguments().getString("cate");
         key1 =getArguments().getString("key1","0");
@@ -142,7 +148,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         Double t_longitude = Double.parseDouble(longitude);
 
         BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
-        View view = View.inflate(getContext(),R.layout.trs_comment_bottom_sheet_lyt,null);
+        view = View.inflate(getContext(),R.layout.trs_comment_bottom_sheet_lyt,null);
 
         dialog.setContentView(view);
         bBehavior = BottomSheetBehavior.from((View)view.getParent());
@@ -154,7 +160,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         ti_tv_when = view.findViewById(R.id.ti_tv_when);
         ti_img_like = view.findViewById(R.id.ti_img_like);
         ti_tv_like = view.findViewById(R.id.ti_tv_like);
-        comment_submit_btn = view.findViewById(R.id.comment_submit_btn);
+
 
         ti_tv_comment.setText(hideuser);
         ti_tv_tag1.setText("#"+key1);
@@ -168,6 +174,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
 
         bottomSheetDialogFrag = new BottomSheetDialogFrag();
         sendRequest_like_check();
+        commentlist();
 
         /*---------------------하뚜 클릭--------------------- */
         ti_img_like.setOnClickListener(new View.OnClickListener() {
@@ -203,47 +210,57 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             }
 
         });
+        /*---------------------코멘트 보내기 버튼--------------------- */
+        btn_find = view.findViewById(R.id.btn_find);
+        btn_find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                t_comment = view.findViewById(R.id.t_comment);
+                comment = t_comment.getText().toString();
+                sendcomment();
+            }
+        });
         
 
-        /*유저 댓글 리스트뷰*/
-        tc_list = view.findViewById(R.id.user_comment_listview);
-        tcAdapter.addItems(
-                ContextCompat.getDrawable(getActivity(),R.drawable.e1),
-                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
-                "gil-dong","#나무아래","#작은소품","#파란색","1분전에 숨김","38","친구들이랑 밥먹으러 가다 찾았어요!"
-
-        );
-
-        tcAdapter.addItems(
-                ContextCompat.getDrawable(getActivity(),R.drawable.e2),
-                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
-                "gil-dong","#전봇대","#조명","#골드","08/11/22 06:10 PM에 찾음","5","강아지랑 산책하다 찾았어요!꿀잼.."
-        );
-
-        tcAdapter.addItems(
-                ContextCompat.getDrawable(getActivity(),R.drawable.e3),
-                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
-                "JellyBean","#상자속","#텀블러","#노란색","08/06/22 09:00 PM에 찾음","25","텀블러 겟함! 감사감사"
-        );
-
-        tcAdapter.addItems(
-                ContextCompat.getDrawable(getActivity(),R.drawable.e4),
-                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
-                "mmthcoffee","#카페앞","#문구류","#핑크","07/25/22 10:00 PM에 찾음","40","예쁜 핑크색펜이었어요"
-        );
-        tcAdapter.addItems(
-                ContextCompat.getDrawable(getActivity(),R.drawable.e5),
-                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
-                "bean","#커피창고","#음료","#커피색","07/20/11 12:45 PM에 찾음","10","커피쿠폰이었음 굿"
-        );
-        tcAdapter.addItems(
-                ContextCompat.getDrawable(getActivity(),R.drawable.e6),
-                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
-                "heets","#의자옆","#문구류","#보라색","07/11/10 10:00 PM에 찾음","55","득템 ㄳ"
-        );
-
-        tc_list.setAdapter(tcAdapter);
-        ListView user_comment_listview = getActivity().findViewById(R.id.user_comment_listview);
+//        /*유저 댓글 리스트뷰*/
+//        tc_list = view.findViewById(R.id.user_comment_listview);
+//        tcAdapter.addItems(
+//                ContextCompat.getDrawable(getActivity(),R.drawable.e1),
+//                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
+//                "gil-dong","#나무아래","#작은소품","#파란색","1분전에 숨김","38","친구들이랑 밥먹으러 가다 찾았어요!"
+//
+//        );
+//
+//        tcAdapter.addItems(
+//                ContextCompat.getDrawable(getActivity(),R.drawable.e2),
+//                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
+//                "gil-dong","#전봇대","#조명","#골드","08/11/22 06:10 PM에 찾음","5","강아지랑 산책하다 찾았어요!꿀잼.."
+//        );
+//
+//        tcAdapter.addItems(
+//                ContextCompat.getDrawable(getActivity(),R.drawable.e3),
+//                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
+//                "JellyBean","#상자속","#텀블러","#노란색","08/06/22 09:00 PM에 찾음","25","텀블러 겟함! 감사감사"
+//        );
+//
+//        tcAdapter.addItems(
+//                ContextCompat.getDrawable(getActivity(),R.drawable.e4),
+//                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
+//                "mmthcoffee","#카페앞","#문구류","#핑크","07/25/22 10:00 PM에 찾음","40","예쁜 핑크색펜이었어요"
+//        );
+//        tcAdapter.addItems(
+//                ContextCompat.getDrawable(getActivity(),R.drawable.e5),
+//                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
+//                "bean","#커피창고","#음료","#커피색","07/20/11 12:45 PM에 찾음","10","커피쿠폰이었음 굿"
+//        );
+//        tcAdapter.addItems(
+//                ContextCompat.getDrawable(getActivity(),R.drawable.e6),
+//                ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
+//                "heets","#의자옆","#문구류","#보라색","07/11/10 10:00 PM에 찾음","55","득템 ㄳ"
+//        );
+//
+//        tc_list.setAdapter(tcAdapter);
+//        ListView user_comment_listview = getActivity().findViewById(R.id.user_comment_listview);
 
         return dialog;
     }
@@ -402,12 +419,6 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 win_dialog.dismiss();
                 btn_find.setText("코멘트 남기기");
-                comment_submit_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        sendcomment();
-                    }
-                });
             }
         });
         win_dialog.show();
@@ -684,10 +695,8 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             @Override
             public void onResponse(String response) {
                 Log.v("resultValue", response);
-                if (response.equals("1")){
-                    sendRequest_like_down();
-                } else if (response.equals("0")){
-                    sendRequest_like_up();
+                if (response.equals("코멘트등록")){
+                    System.out.println("코멘트등록");
                 }
             }
         }, new Response.ErrorListener() {
@@ -716,7 +725,87 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
 //                System.out.println("숨긴유저"+hideuser);
-                params.put("user_id",user_id);
+                params.put("t_id",t_id);
+                params.put("find_user", user_id);
+                params.put("t_comment",comment);
+
+                return params;
+            }
+        };
+
+
+        String Tag = "LJY";
+        stringRequest.setTag(Tag);
+        queue.add(stringRequest);
+
+
+    }
+
+    // 코멘트리스트업
+    public void commentlist() {
+        // Volley Lib 새로운 요청객체 생성
+        queue = Volley.newRequestQueue(getContext().getApplicationContext());
+        // 서버에 요청할 주소
+        String url = mainhost+"commentlist";
+        // 요청 문자열 저장
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            // 응답데이터를 받아오는 곳
+            @Override
+            public void onResponse(String response) {
+                tcAdapter = new trsCommentAdapter();
+                Log.v("코멘트리스트", response);
+                tc_list = view.findViewById(R.id.user_comment_listview);
+                String[] info = response.split("/");
+                for (int i = 0; i < info.length; i++) {
+                    String [] info2 = info[i].split(",");
+                    for (int j = 0; j <info[i].length();j++){
+//                         찾은 날짜가 None이면 버림
+                        if (info2[0].equals("None")){ break; }
+                        list_finddate = info2[0];
+                        list_finduser = info2[1];
+                        list_key1 = info2[2];
+                        list_key2 = info2[3];
+                        list_key3 = info2[4];
+                        list_comment = info2[5];
+                        list_like = info2[6];
+
+                    }
+
+                    tcAdapter.addItems(
+                            ContextCompat.getDrawable(getActivity(),R.drawable.e1),
+                            ContextCompat.getDrawable(getActivity(),R.drawable.like_full),
+                            list_finduser,list_key1,list_key2,list_key3,list_finddate,list_like,list_comment
+                    );
+                }
+                tc_list.setAdapter(tcAdapter);
+
+            }
+        }, new Response.ErrorListener() {
+            // 서버와의 연동 에러시 출력
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override //response를 UTF8로 변경해주는 소스코드
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String utf8String = new String(response.data, "UTF-8");
+                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            // 보낼 데이터를 저장하는 곳
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+//                System.out.println("숨긴유저"+hideuser);
                 params.put("hide_user", hideuser);
 
                 return params;

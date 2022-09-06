@@ -51,8 +51,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -112,11 +110,6 @@ public class HideTreasureFrag extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        // 스토리지 인스턴스
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        // 스토리지 참조
-        StorageReference storageRef = storage.getReference();
-        // 파일명 생성
 
         View view = inflater.inflate(R.layout.trs_add_lyt,container,false);
         iv_UserPhoto = view.findViewById(R.id.iv_UserPhoto);
