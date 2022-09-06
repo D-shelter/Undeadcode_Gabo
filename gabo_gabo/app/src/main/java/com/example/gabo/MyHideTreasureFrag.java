@@ -108,7 +108,7 @@ public class MyHideTreasureFrag extends BottomSheetDialogFragment {
         // Volley Lib 새로운 요청객체 생성
         queue = Volley.newRequestQueue(this.getActivity());
         // 서버에 요청할 주소
-        String url = mainhost+"findtrs";
+        String url = mainhost+"hidetrs";
         // 요청 문자열 저장
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             // 응답데이터를 받아오는 곳
