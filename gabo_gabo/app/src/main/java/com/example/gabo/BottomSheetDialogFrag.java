@@ -43,6 +43,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /*-------------------핀 선택시 뜨는 유저 댓글 바텀시트 프래그먼트 --------------------------*/
@@ -88,6 +91,11 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     private String mainhost;
 
     private String user_id;
+
+    Random rd = new Random();
+
+    private Timer timer;
+    private int cnt = 0;
 
 
     @Override
@@ -173,7 +181,10 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             public void onClick(View view) {
 //                Toast.makeText(getContext().getApplicationContext(),"찾았다!",Toast.LENGTH_SHORT).show();
 //                openWinDialog();
-                openquizDialog();
+                if (cnt>=60 || cnt==0){openquizDialog();}
+                else if (0<cnt && cnt <60){
+                    Toast.makeText(getContext().getApplicationContext(),(60-cnt)+"초 뒤에 다시 시도해주세요.",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -237,8 +248,13 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         super.onStart();
     }
 
-
-
+    /*---------------------------------------보물찾기 퀴즈 틀릴시 타이머 설정---------------------------------------*/
+    private void tiktok(){
+        if (cnt>=60){
+            timer.cancel();
+        }
+        cnt++;
+    }
     /*---------------------------------------보물찾기 퀴즈 다이얼로그 실행---------------------------------------*/
     private void openquizDialog(){
         findquizDailog = new Dialog(getContext());
@@ -249,6 +265,37 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         TextView tv_findquiz2 = findquizDailog.findViewById(R.id.tv_findquiz2);
         TextView tv_findquiz3 = findquizDailog.findViewById(R.id.tv_findquiz3);
 
+
+
+
+        String [] cates = new String[3];
+        int realcate = rd.nextInt(3);
+        for (int i = 0; i <3; i++){
+            cates[i] = String.valueOf(rd.nextInt(17)+1);
+        }
+        cates[realcate] = cate;
+        for (int i= 0; i<3; i++){
+            if (cates[i].equals("1")) { cates[i] = "디지털기기";}
+            else if (cates[i].equals("2")) { cates[i] = "패션의류/잡화";}
+            else if (cates[i].equals("3")) { cates[i] = "뷰티";}
+            else if (cates[i].equals("4")) { cates[i] = "출산/육아";}
+            else if (cates[i].equals("5")) { cates[i] = "식품";}
+            else if (cates[i].equals("6")) { cates[i] = "생활용품";}
+            else if (cates[i].equals("7")) { cates[i] = "홈인테리어";}
+            else if (cates[i].equals("8")) { cates[i] = "생활가전";}
+            else if (cates[i].equals("9")) { cates[i] = "스포츠/레저";}
+            else if (cates[i].equals("10")) { cates[i] = "자동차용품";}
+            else if (cates[i].equals("11")) { cates[i] = "도서/음반/DVD";}
+            else if (cates[i].equals("12")) { cates[i] = "완구/취미";}
+            else if (cates[i].equals("13")) { cates[i] = "문구/오피스";}
+            else if (cates[i].equals("14")) { cates[i] = "반려동물용품";}
+            else if (cates[i].equals("15")) { cates[i] = "헬스/건강";}
+            else if (cates[i].equals("16")) { cates[i] = "여행/티켓";}
+            else if (cates[i].equals("17")) { cates[i] = "식물";}
+        }
+        tv_findquiz1.setText(cates[0]);
+        tv_findquiz2.setText(cates[1]);
+        tv_findquiz3.setText(cates[2]);
         imageViewClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -259,22 +306,64 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         tv_findquiz1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openWinDialog();
-                findquizDailog.dismiss();
+                cnt = 0;
+                if (realcate==0){
+                    openWinDialog();
+                    findquizDailog.dismiss();
+                } else {
+                    //틀렸습니다. 다이얼로그 띄우기
+                    TimerTask timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            tiktok();
+                        }
+                    };
+                    timer = new Timer();
+                    timer.schedule(timerTask,0,1000);
+                    findquizDailog.dismiss();
+                }
             }
         });
         tv_findquiz2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openWinDialog();
-                findquizDailog.dismiss();
+                if (realcate==1){
+                    openWinDialog();
+                    findquizDailog.dismiss();
+                } else {
+                    //틀렸습니다. 다이얼로그 띄우기
+                    cnt = 0;
+                    TimerTask timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            tiktok();
+                        }
+                    };
+                    timer = new Timer();
+                    timer.schedule(timerTask,0,1000);
+                    findquizDailog.dismiss();
+                }
             }
         });
         tv_findquiz3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openWinDialog();
-                findquizDailog.dismiss();
+                if (realcate==2){
+                    openWinDialog();
+                    findquizDailog.dismiss();
+                } else {
+                    //틀렸습니다. 다이얼로그 띄우기
+                    cnt = 0;
+                    TimerTask timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            tiktok();
+                        }
+                    };
+                    timer = new Timer();
+                    timer.schedule(timerTask,0,1000);
+                    findquizDailog.dismiss();
+                }
             }
         });
         findquizDailog.show();
