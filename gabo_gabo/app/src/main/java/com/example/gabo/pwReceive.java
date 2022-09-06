@@ -2,10 +2,13 @@ package com.example.gabo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,11 +31,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class pwReceive extends AppCompatActivity {
+    private ImageView pwreciveimg1, pwreciveimg2;
     private Button btn_receive_Id, btn_receive_Pw, btn_change_pw;
     private EditText edt_change_pw1, edt_change_pw2;
-    private TextView tv_receive_Restart, tv_receive_Name, tv_receive_Password_check;
+    private TextView tv_receive_Restart, tv_new_Passoword, tv_receive_password_Check;
     private RequestQueue queue;
     private StringRequest stringRequest;
+    private boolean pw1, pw2;
+
+
 
 
     @Override
@@ -41,19 +48,72 @@ public class pwReceive extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.pwreceive);
+        pwreciveimg1 = findViewById(R.id.pwreciveimg1);
+        pwreciveimg2 = findViewById(R.id.pwreciveimg2);
         btn_receive_Id = findViewById(R.id.btn_receive_Id);
         btn_receive_Pw = findViewById(R.id.btn_receive_Pw);
         btn_change_pw = findViewById(R.id.btn_change_pw);
-        edt_change_pw1 = findViewById(R.id.edt_change_pw1);
-        edt_change_pw2 = findViewById(R.id.edt_change_pw2);
+        edt_change_pw1 = findViewById(R.id.edt_change_Pw1);
+        edt_change_pw2 = findViewById(R.id.edt_change_Pw2);
         tv_receive_Restart = findViewById(R.id.tv_receive_Restart);
-        tv_receive_Name = findViewById(R.id.tv_receive_Name);
-        tv_receive_Password_check = findViewById(R.id.tv_receive_Password_check);
+        tv_new_Passoword = findViewById(R.id.tv_new_Passoword);
+        tv_receive_password_Check = findViewById(R.id.tv_receive_password_Check);
         btn_receive_Id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), idFind.class);
                 startActivity(intent);
+            }
+        });
+
+        edt_change_pw1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (edt_change_pw1.getText().toString().equals(edt_change_pw1.getText().toString())) {
+                    pwreciveimg1.setImageResource(R.drawable.findpw3);
+                    pw1 = true;
+
+                } else {
+                    pwreciveimg1.setImageResource(R.drawable.findpw1);
+                    pw1 = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        edt_change_pw2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (edt_change_pw1.getText().toString().equals(edt_change_pw2.getText().toString())) {
+                    pwreciveimg2.setImageResource(R.drawable.findpw4);
+                    pw2 = true;
+
+                } else {
+                    pwreciveimg2.setImageResource(R.drawable.findpw2);
+                    pw2 = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (pw2==false){
+                    edt_change_pw2.setText("입력하신 비밀번호와 다릅니다.");
+                } else if(pw2==true){
+                    edt_change_pw2.setText("");
+                }
             }
         });
 

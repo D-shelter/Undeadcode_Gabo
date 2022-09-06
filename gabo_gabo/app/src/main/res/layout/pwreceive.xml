@@ -5,156 +5,216 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f1ebd9"
-    android:orientation="vertical"
-    tools:context=".pwReceive">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:background="#f1ebd9"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_receive_Id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/buttonundersolid"
-                android:text="FIND ACCOUNT"
-                android:textColor="#808080"
-                android:textSize="18dp" />
-
-            <Button
-                android:id="@+id/btn_receive_Pw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/buttonundersolid2"
-                android:text="Find PW"
-                android:textColor="#0d6aba"
-                android:textSize="18dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_receive_Restart"
-                android:layout_width="350dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
-                android:gravity="center|left"
-                android:text="비밀번호 재설정"
-                android:textSize="18dp" />
-
-            <EditText
-                android:id="@+id/edt_change_pw1"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
-                android:drawableRight="@drawable/drawableright1"
-                android:drawablePadding="10dp"
-
-                android:ems="10"
-                android:gravity="center|left"
-                android:hint="New Password"
-                android:inputType="textPersonName"
-                android:textColorHint="#8aaa"
-                android:textSize="18dp" />
+    tools:context=".JoinActivity"><![CDATA[
 
 
-            <TextView
-                android:id="@+id/tv_receive_Name"
-                android:layout_width="350dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:gravity="center|left"
-                android:text="8~16자 영문 대소문자, 숫자, 특수문자를 사용하세요"
-                android:textColor="#0d6aba"
-                android:textSize="16dp"
-                android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edt_change_pw2"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
-                android:drawableRight="@drawable/drawableright2"
-                android:ems="10"
-                android:gravity="center|left"
-                android:hint="Password Check"
-                android:inputType="textPersonName"
-                android:textColorHint="#8aaa"
-                android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/tv_receive_Password_check"
-                android:layout_width="350dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:gravity="center|left"
-                android:text="비밀번호 재확인"
-                android:textSize="18dp"
-                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btn_change_pw"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:background="@drawable/buttonsolid2"
-                android:text="CHANGE PASSWORD"
-                android:textColor="#0d6aba"
-                android:textSize="20dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:background="#f1ebd9"
-                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/findaccount"
-                    android:orientation="horizontal"></LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="125dp"
-                    android:layout_marginTop="125dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/findaccount2"
-                    android:orientation="horizontal">
 
-                </LinearLayout>
 
-            </LinearLayout>
 
-        </LinearLayout>
+    app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.785"
+         />
 
-    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ]]>
+
+    <EditText
+        android:id="@+id/edt_change_Pw2"
+        android:layout_width="315dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:gravity="center|left"
+        android:hint="New Password"
+        android:inputType="textPassword"
+        android:maxLength="16"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_new_Passoword" />
+
+    <EditText
+        android:id="@+id/edt_change_Pw1"
+        android:layout_width="315dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:gravity="center|left"
+        android:hint="Password Check"
+        android:inputType="textPassword"
+        android:maxLength="16"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_receive_Restart" />
+
+    <ImageView
+        android:id="@+id/pwreciveimg2"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.377"
+        app:srcCompat="@drawable/join_check_on" />
+
+    <ImageView
+        android:id="@+id/pwreciveimg1"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.264"
+        app:srcCompat="@drawable/sign_up_pwcheck_ico" />
+
+    <Button
+        android:id="@+id/btn_receive_Id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonundersolid"
+        android:text="FIAD ACCOUNT"
+        android:textColor="#808080"
+        app:layout_constraintEnd_toStartOf="@+id/btn_receive_Pw"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_receive_Pw"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonundersolid2"
+        android:text="FIND PW"
+        android:textColor="#0d6aba"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_receive_Id"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_change_pw"
+        android:layout_width="315dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="200dp"
+        android:background="@drawable/buttonsolid2"
+        android:text="CHANGE PASSWORD"
+        android:textColor="#0d6aba"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_receive_password_Check"
+        app:layout_constraintVertical_bias="0.583" />
+
+    <TextView
+        android:id="@+id/tv_receive_Restart"
+        android:layout_width="315dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="100dp"
+        android:gravity="center|left"
+        android:text="비밀번호 재설정"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_new_Passoword"
+        android:layout_width="315dp"
+        android:layout_height="48dp"
+        android:gravity="center|left"
+        android:text="  8~16자 영문 대 소문자,숫자,특수문자를 사용하세요"
+        android:textColor="#0d6aba"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="173dp" />
+
+    <TextView
+        android:id="@+id/tv_receive_password_Check"
+        android:layout_width="315dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center|left"
+        android:text="  비밀번호 재확인"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edt_change_Pw2" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="163dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/pwreciveleft" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/pwreicevright" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

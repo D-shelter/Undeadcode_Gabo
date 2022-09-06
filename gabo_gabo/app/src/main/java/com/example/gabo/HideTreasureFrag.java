@@ -36,6 +36,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
@@ -50,8 +51,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -62,6 +67,7 @@ import java.util.Map;
 
 /*-------------보물 등록페이지의 프레그먼트-----------------*/
 public class HideTreasureFrag extends Fragment {
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     private TextView tv_category;
     private String[] treasureCategory;
@@ -101,12 +107,16 @@ public class HideTreasureFrag extends Fragment {
     private String mainhost;
 
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
-
+        // 스토리지 인스턴스
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        // 스토리지 참조
+        StorageReference storageRef = storage.getReference();
+        // 파일명 생성
 
         View view = inflater.inflate(R.layout.trs_add_lyt,container,false);
         iv_UserPhoto = view.findViewById(R.id.iv_UserPhoto);
@@ -203,7 +213,6 @@ public class HideTreasureFrag extends Fragment {
                     // 사진 업로드 해달라고 토스트 띄움
                     Toast.makeText(getContext().getApplicationContext(),"사진을 업로드 해주세요",Toast.LENGTH_SHORT).show();
                 } else{
-
                     sendRequest();
                 }
 
@@ -260,12 +269,11 @@ public class HideTreasureFrag extends Fragment {
 
         //사진촬영 버튼
         TextView dialog_btn_cam = dialog_camera.findViewById(R.id.dialog_btn_cam);
-        dialog_btn_cam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                activityResultPicture.launch(intent);
+        dialog_btn_cam.setOnClickListener(view -> {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (intent.resolveActivity(getActivity().getPackageManager()) != null){
             }
+            activityResultPicture.launch(intent);
         });
 
         //취소 버튼
@@ -294,6 +302,7 @@ public class HideTreasureFrag extends Fragment {
                 tv_picadd.setText("");
                 img_addphoto.setImageResource(0);
                 upload = true;
+                saveBitmaptoJpeg(bitmap);
 
             }
         }
@@ -411,7 +420,8 @@ public class HideTreasureFrag extends Fragment {
                 params.put("hideuser", hideuser);
                 params.put("latitude",location[0]);
                 params.put("longitude",location[1]);
-                params.put("img", String.valueOf(bitmap));
+                saveBitmaptoJpeg(bitmap);
+//                params.put("img", String.valueOf(bitmap));
 
 
                 return params;
@@ -424,5 +434,31 @@ public class HideTreasureFrag extends Fragment {
         queue.add(stringRequest);
 
 
+    }
+    public static void saveBitmaptoJpeg(Bitmap bitmap){
+        String name = "apply";
+        String folder = "folder";
+        String ex_storage =Environment.getExternalStorageDirectory().getAbsolutePath();
+        // Get Absolute Path in External Sdcard
+        String foler_name = "/"+folder+"/";
+        String file_name = name+".jpg";
+        String string_path = ex_storage+foler_name;
+
+        File file_path;
+        try{
+            file_path = new File(string_path);
+            if(!file_path.isDirectory()){
+                file_path.mkdirs();
+            }
+            FileOutputStream out = new FileOutputStream(string_path+file_name);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.close();
+
+        }catch(FileNotFoundException exception){
+            Log.e("FileNotFoundException", exception.getMessage());
+        }catch(IOException exception){
+            Log.e("IOException", exception.getMessage());
+        }
     }
 }

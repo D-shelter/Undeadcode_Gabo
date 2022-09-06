@@ -139,6 +139,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int selectId = item.getItemId();
                 if (selectId==R.id.page1){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_location", user_location);
+                    bundle.putString("mainhost",mainhost);
+                    bundle.putString("user_id",user_id);
+                    fragTresureListview.setArguments(bundle);
                     fm.beginTransaction().replace(R.id.frame,fragTresureListview).commit();
                 }else if (selectId==R.id.page2){
                     Bundle bundle = new Bundle();
@@ -146,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     bundle.putString("user_location",user_location);
                     bundle.putString("mainhost",mainhost);
                     fragmHideTreasure.setArguments(bundle);
-                    System.out.println(user_location);
                     fm.beginTransaction().replace(R.id.frame,fragmHideTreasure).commit();
                 }else if (selectId==R.id.page3){
                     fm.beginTransaction().replace(R.id.frame,finalMapFragment).commit();
