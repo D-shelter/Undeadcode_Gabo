@@ -33,24 +33,31 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h4>보물 승인 대기 리스트</h4>
+                                    <h4>블랙 리스트</h4>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>보물 아이디</th>
-                                                <th>숨긴사람</th>
-                                                <th>날짜</th>
+                                                <th>아이디</th>
+                                                <th>이름</th>
+                                                <th>폰 번호</th>
+                                                <th>이메일</th>
+                                                <th>가입일</th>
+                                                <th> 블랙</th> 
                                         
                                             </tr>
                                         </thead>
                                         {%for obj in data_list %}
                                         <tbody>
-                                            <tr onclick="location.href='approveTreasure?t_id={{obj.t_id}}'">
-                                                <th>{{obj.t_id}}</th>
-                                                <td>{{obj.hide_user}}</td>
-                                                <td>{{obj.hide_date}} </td>
+                                            <tr>
+                                                <th>{{obj.user_id}}</th>
+                                                <td>{{obj.user_name}}</td>
+                                                <td>{{obj.user_phone}} </td>
+                                                <td>{{obj.user_email}}</td>
+                                                <td>{{obj.user_startdate}}</td>
+                                                <td>{{obj.user_black}}</td>
+                                                <td><button class="btn btn-primary px-3 ml-4" onclick="location.href='applyBlack?user_id={{obj.user_id}}'">on</button></td>
                                             </tr>
                                         
                                         </tbody>
