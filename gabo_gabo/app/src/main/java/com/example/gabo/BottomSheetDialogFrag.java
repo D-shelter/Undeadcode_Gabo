@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +70,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     private Dialog findquizDailog;
     private Dialog quizfailDailog; //보물퀴즈 틀렸을 때 다이얼로그
 
+
     // 숨긴사람 이름
     private TextView ti_tv_comment;
 
@@ -99,13 +103,16 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     private Timer timer;
     private int cnt = 0;
 
-    private Button comment_submit_btn;
-    private TextView t_comment;
-    private String comment;
+    private LinearLayout comment_area; //코멘트 작성 영역(레이아웃)
+    private TextView comment_submit_btn; //작성완료 버튼
+    private EditText t_comment; //실제 작성 멀티텍스트뷰
+    private String comment; //작성내용 담을 변수
 
     private String list_finddate, list_finduser, list_key1, list_key2, list_key3, list_comment, list_like;
 
     View view;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -169,8 +176,11 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         ti_tv_when.setText(hidedate+"에 숨김");
         ti_tv_like.setText(like);
 
+        //코멘트 작성 영역 처음엔 숨김
+        comment_area = view.findViewById(R.id.comment_area);
+        comment_area.setVisibility(View.GONE);
 
-
+        t_comment = view.findViewById(R.id.t_comment);
 
         bottomSheetDialogFrag = new BottomSheetDialogFrag();
         sendRequest_like_check();
@@ -215,12 +225,18 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
         comment_submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                t_comment = view.findViewById(R.id.t_comment);
-                comment = t_comment.getText().toString();
-                sendcomment();
+
+
+                if ((t_comment.getText().toString()).equals("")){
+                    Toast.makeText(getContext().getApplicationContext(),"코멘트를 써주세요!",Toast.LENGTH_SHORT).show();
+                }else{
+                    comment = t_comment.getText().toString();
+                    sendcomment();
+                }
+
             }
         });
-        
+
 
 //        /*유저 댓글 리스트뷰*/
 //        tc_list = view.findViewById(R.id.user_comment_listview);
@@ -413,12 +429,19 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             }
         });
         /*보물찾기 완료 버튼을 누르게 되면
-        * 찾았다 버튼이 코멘트 남기기로 바뀐다*/
+         * 찾았다 버튼이 코멘트 남기기로 바뀐다*/
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 win_dialog.dismiss();
                 btn_find.setText("코멘트 남기기");
+                btn_find.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        comment_area.setVisibility(View.VISIBLE);
+                    }
+                });
+
             }
         });
         win_dialog.show();
@@ -697,6 +720,10 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
                 Log.v("resultValue", response);
                 if (response.equals("코멘트등록")){
                     System.out.println("코멘트등록");
+                    //코멘트영역 숨기기
+                    comment_area.setVisibility(View.GONE);
+                    //버튼 텍스트 찾았다로 다시 바꾸기
+                    btn_find.setText("찾았다!");
                 }
             }
         }, new Response.ErrorListener() {
