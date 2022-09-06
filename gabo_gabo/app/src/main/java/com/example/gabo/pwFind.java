@@ -1,11 +1,15 @@
 package com.example.gabo;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +38,7 @@ public class pwFind extends AppCompatActivity {
 
     private RequestQueue queue;
     private StringRequest stringRequest;
+    private Dialog pwfaildialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +68,34 @@ public class pwFind extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendRequest();
+
             }
         });
+
+    }
+
+    /*---------------------------------------비번불일치 다이얼로그 실행---------------------------------------*/
+    private void openpwfailDialog(){
+        pwfaildialog = new Dialog(getApplicationContext());
+        pwfaildialog.setContentView(R.layout.dialog_findaccount);
+        pwfaildialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView imageViewClose=pwfaildialog.findViewById(R.id.imageViewClose);
+        TextView tv_findquiz1 = pwfaildialog.findViewById(R.id.findaccount_againbtn);
+
+        imageViewClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pwfaildialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Dialog Close", Toast.LENGTH_SHORT).show();
+            }
+        });
+        tv_findquiz1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pwfaildialog.dismiss();
+            }
+        });
+        pwfaildialog.show();
 
     }
 
@@ -91,7 +122,8 @@ public class pwFind extends AppCompatActivity {
                     intent.putExtra("mail",putMail);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(),"입력하신 정보를 다시 한 번 확인해 주세요..",Toast.LENGTH_LONG).show();
+                    openpwfailDialog();
+                    //Toast.makeText(getApplicationContext(),"입력하신 정보를 다시 한 번 확인해 주세요..",Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
