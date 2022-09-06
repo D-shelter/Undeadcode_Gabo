@@ -38,9 +38,10 @@ public class trsListview extends Fragment {
 
     private ListView tl_list;
     private TextView tl_T_num;
-    private trsListviewAdapter adapter = new trsListviewAdapter();
+    private trsListviewAdapter adapter;
     private String user_id , user_location, user_lati, user_longi;
     private String mainhost;
+    private String list_name, list_key1, list_key2, list_key3, list_hidedate,list_like;
     private View view;
 
     @Nullable
@@ -71,6 +72,7 @@ public class trsListview extends Fragment {
 //        adapter.listaddItems(ContextCompat.getDrawable(getActivity(), R.drawable.e1),ContextCompat.getDrawable(getActivity(),R.drawable.like_full),"Coliny","10km","한글자ㅇ","두글자ㅇ","세글자","지금 숨김","1323");
 //        tl_list.setAdapter(adapter);
 
+
         return view;
 
 
@@ -86,27 +88,32 @@ public class trsListview extends Fragment {
             // 응답데이터를 받아오는 곳
             @Override
             public void onResponse(String response) {
+                adapter = new trsListviewAdapter();
                 tl_T_num = view.findViewById(R.id.tl_T_num);
+                tl_list = view.findViewById(R.id.tl_list);
+
                 Log.v("resultValue", response);
                 String[] info = response.split("/");
-                //System.out.println(info.length);
                 for (int i = 0; i < info.length; i++) {
-                    //System.out.println(info[i]);
+//                    System.out.println(info[i]);
+                    String [] info2 = info[i].split(",");
                     for (int j = 0; j <info[i].length();j++){
-                        String [] info2 = info[i].split(",");
+
 //                         찾은 유저가 있으면 리스트에 표시 안함
-                        if (info2[6].equals("None")){ break; }
+                        if (!info2[6].equals("None")){ break; }
 //                         승인 안됐으면 리스트에 표시 안함
                         if (info2[7].equals("0")){break;}
-                        String list_name = info2[5];
-                        String list_key1 = info2[2];
-                        String list_key2 = info2[3];
-                        String list_key3 = info2[4];
-                        String list_hidedate = info2[10];
-                        String list_like = info2[11];
-                        adapter.listaddItems(ContextCompat.getDrawable(getActivity(), R.drawable.e1),ContextCompat.getDrawable(getActivity(),R.drawable.like_full),list_name,"1km",list_key1,list_key2,list_key3,list_hidedate,list_like);
+                        list_name = info2[5];
+                        list_key1 = info2[2];
+                        list_key2 = info2[3];
+                        list_key3 = info2[4];
+                        list_hidedate = info2[10];
+                        list_like = info2[11];
+
                     }
+                    adapter.listaddItems(ContextCompat.getDrawable(getActivity(), R.drawable.e1),ContextCompat.getDrawable(getActivity(),R.drawable.like_full),list_name,"1km",list_key1,list_key2,list_key3,list_hidedate,list_like);
                 }
+                System.out.println("aaaaa"+list_name);
                 tl_list.setAdapter(adapter);
                 tl_T_num.setText(info.length+"");
 
