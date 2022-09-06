@@ -64,6 +64,7 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
     private TextView btn_find;
     private Dialog win_dialog; //정답축하합니다 다이얼로그
     private Dialog findquizDailog;
+    private Dialog quizfailDailog; //보물퀴즈 틀렸을 때 다이얼로그
 
     // 숨긴사람 이름
     private TextView ti_tv_comment;
@@ -403,6 +404,30 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
             }
         });
         win_dialog.show();
+
+    }
+    /*-----------------------------------보물찾기 정답이 아닙니다 다이얼로그-------------------------------------*/
+
+    private void openquizfailDialog() {
+        quizfailDailog = new Dialog(getContext());
+        quizfailDailog.setContentView(R.layout.dialog_quizfail);
+        quizfailDailog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView imageViewClose=quizfailDailog.findViewById(R.id.imageViewClose);
+        TextView quizfail_btn = quizfailDailog.findViewById(R.id.quizfail_btn);
+
+        imageViewClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                quizfailDailog.dismiss();
+            }
+        });
+        quizfail_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                quizfailDailog.dismiss();
+            }
+        });
+        quizfailDailog.show();
 
     }
 
