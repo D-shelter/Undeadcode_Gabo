@@ -52,7 +52,7 @@ public class mypageFrag extends Fragment {
     private RequestQueue queue;
     private StringRequest stringRequest;
 
-    private String mainhost;
+    private String mainhost, user_id;
 
 
 
@@ -64,8 +64,11 @@ public class mypageFrag extends Fragment {
 
         fmm=getActivity().getSupportFragmentManager();
 
+        user_id = getArguments().getString("user_id");
         mainhost = getArguments().getString("mainhost");
-
+        Bundle bundle = new Bundle();
+        bundle.putString("mainhost",mainhost);
+        bundle.putString("user_id",user_id);
 
         /*---------내가찾은보물 열기-----------*/
         myFindTreasureFrag = new MyFindTreasureFrag();
@@ -73,6 +76,7 @@ public class mypageFrag extends Fragment {
         myfind_open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myFindTreasureFrag.setArguments(bundle);
                 myFindTreasureFrag.show(fmm,"showmyfind");
             }
         });
@@ -80,6 +84,7 @@ public class mypageFrag extends Fragment {
         myfind_bignum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myFindTreasureFrag.setArguments(bundle);
                 myFindTreasureFrag.show(fmm,"showmyfind");
             }
         });
@@ -90,6 +95,7 @@ public class mypageFrag extends Fragment {
         myhide_open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myHideTreasureFrag.setArguments(bundle);
                 myHideTreasureFrag.show(fmm,"showmyhide");
             }
         });
@@ -97,6 +103,7 @@ public class mypageFrag extends Fragment {
         myhide_bignum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myHideTreasureFrag.setArguments(bundle);
                 myHideTreasureFrag.show(fmm,"showmyhide");
             }
         });
@@ -107,6 +114,7 @@ public class mypageFrag extends Fragment {
         mycomment_open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myCommentsFrag.setArguments(bundle);
                 myCommentsFrag.show(fmm,"showmycomments");
             }
         });
@@ -186,9 +194,6 @@ public class mypageFrag extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
 
-                String user_id;
-                user_id = getArguments().getString("user_id");
-
                 params.put("id",user_id);
 
                 return params;
@@ -201,80 +206,6 @@ public class mypageFrag extends Fragment {
         stringRequest.setTag(TAG);
         queue.add(stringRequest);
 
-
     }
-
-    //내가 숨긴 보물 리퀘스트
-    public void sendRequestmyhide(){
-        // Volley Lib 새로운 요청객체 생성
-        queue = Volley.newRequestQueue(this.getActivity());
-        // 서버에 요청할 주소
-        String url =mainhost+"myhidepage";
-        // 요청 문자열 저장
-        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            // 응답데이터를 받아오는 곳
-            @Override
-            public void onResponse(String response) {
-                Log.v("resultValue",response);
-
-                String user_id;
-                user_id = getArguments().getString("user_id");
-
-                String[] res = response.split(",");
-
-                String myhide_location = res[0];
-                String myhide_hint1 = res[1];
-                String myhide_hint2 = res[2];
-                String myhide_hint3 = res[3] ;
-                String myhide_date = res[4] ;
-                String myhide_like = res[5];
-
-                //myHideAdapter로 보내야함
-
-            }
-        }, new Response.ErrorListener() {
-            // 서버와의 연동 에러시 출력
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        }){
-            @Override //response를 UTF8로 변경해주는 소스코드
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String utf8String = new String(response.data, "UTF-8");
-                    return Response.success(utf8String, HttpHeaderParser.parseCacheHeaders(response));
-                } catch (UnsupportedEncodingException e) {
-                    // log error
-                    return Response.error(new ParseError(e));
-                } catch (Exception e) {
-                    // log error
-                    return Response.error(new ParseError(e));
-                }
-            }
-            // 보낼 데이터를 저장하는 곳
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-
-                String user_id;
-                user_id = getArguments().getString("user_id");
-
-                params.put("id",user_id);
-
-                return params;
-            }
-        };
-
-
-        //TAG는 필수 아님
-        String TAG = "ojy";
-        stringRequest.setTag(TAG);
-        queue.add(stringRequest);
-
-
-    }
-
-
 
 }
