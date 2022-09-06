@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -36,6 +37,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
@@ -51,13 +53,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONException;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -110,6 +118,11 @@ public class HideTreasureFrag extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        // 스토리지 인스턴스
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        // 스토리지 참조
+        StorageReference storageRef = storage.getReference();
+        // 파일명 생성
 
         View view = inflater.inflate(R.layout.trs_add_lyt,container,false);
         iv_UserPhoto = view.findViewById(R.id.iv_UserPhoto);
@@ -294,8 +307,9 @@ public class HideTreasureFrag extends Fragment {
                 dialog_btn_cancle.callOnClick();
                 tv_picadd.setText("");
                 img_addphoto.setImageResource(0);
+                Intent sendToMain = new Intent(getContext(),MainActivity.class);
+                sendToMain.putExtra("bitmapPic", bitmap);
                 upload = true;
-                saveBitmaptoJpeg(bitmap);
 
             }
         }
@@ -413,8 +427,7 @@ public class HideTreasureFrag extends Fragment {
                 params.put("hideuser", hideuser);
                 params.put("latitude",location[0]);
                 params.put("longitude",location[1]);
-                saveBitmaptoJpeg(bitmap);
-//                params.put("img", String.valueOf(bitmap));
+                params.put("img", String.valueOf(bitmap));
 
 
                 return params;
@@ -428,30 +441,14 @@ public class HideTreasureFrag extends Fragment {
 
 
     }
-    public static void saveBitmaptoJpeg(Bitmap bitmap){
-        String name = "apply";
-        String folder = "folder";
-        String ex_storage =Environment.getExternalStorageDirectory().getAbsolutePath();
-        // Get Absolute Path in External Sdcard
-        String foler_name = "/"+folder+"/";
-        String file_name = name+".jpg";
-        String string_path = ex_storage+foler_name;
-
-        File file_path;
-        try{
-            file_path = new File(string_path);
-            if(!file_path.isDirectory()){
-                file_path.mkdirs();
-            }
-            FileOutputStream out = new FileOutputStream(string_path+file_name);
-
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.close();
-
-        }catch(FileNotFoundException exception){
-            Log.e("FileNotFoundException", exception.getMessage());
-        }catch(IOException exception){
-            Log.e("IOException", exception.getMessage());
-        }
+    // bitmap이 파일이 너무 커서 String으로 변환하는 함수
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String bitmapToString(Bitmap bitmap){ /** Bitmap을 String 으로 변환 */
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String imageString = Base64.getEncoder().encodeToString(imageBytes);
+        return imageString;
     }
+
 }

@@ -10,8 +10,13 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +31,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,6 +50,10 @@ import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.LocationButtonView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Time;
 import java.util.Arrays;
@@ -61,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String[] PERMISSIONS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION};
-
+    private static final String ROOT_URL = "http://192.168.21.187:5013/profileUpload";
     //프레그먼트 객체
     private HideTreasureFrag fragmHideTreasure; //보물등록
     private trsListview fragTresureListview;  //보물리스트
@@ -80,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String user_id;
 
     private String mainhost;
+
+    private String pic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,8 +199,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
          bottom_btn.performClick();
          */
 
-
-
+        Intent takeBitmap = getIntent();
+        pic = takeBitmap.getStringExtra("bitmapPic");
+        uploadPic(StringToBitmap(pic));
     }
 
 
@@ -463,5 +476,57 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+    private void uploadPic(final Bitmap bitmap) {
 
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, ROOT_URL,
+                new Response.Listener<NetworkResponse>() {
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+
+                        String res = new String(response.data);
+                        Log.d("response", res);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("GotError",""+error.getMessage());
+                    }
+                }) {
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("image", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                params.put("id", new DataPart("admin","".getBytes())); // string을 그냥 보낼 수 없어서 ""을 byte로 바꾸고 보낸다.
+                // 실제로 받는 것은 new DataPart의 name이다
+                return params;
+            }
+
+
+        };
+
+        // adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMultipartRequest);
+    }
+
+    /* * Bitmap을 String형으로 변환 * */
+    public static Bitmap StringToBitmap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
 }
