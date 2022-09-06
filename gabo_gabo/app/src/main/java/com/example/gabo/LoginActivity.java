@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btn_login_signin, btn_login_signup, btn_id_Find, btn_pw_Find;
     private RequestQueue queue;
     private StringRequest stringRequest;
-    private final String mainhost = "http://192.168.21.8:5013/";
+    private final String mainhost = "http://192.168.21.187:5013/";
 
 
     @Override
