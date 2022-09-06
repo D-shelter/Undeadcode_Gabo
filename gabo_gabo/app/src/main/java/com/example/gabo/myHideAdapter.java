@@ -38,7 +38,7 @@ public class myHideAdapter extends BaseAdapter {
         myHideTreasureVO vo = items.get(i);
         ImageView myhide_img_profile = view.findViewById(R.id.myhide_img_profile);
         ImageView myhide_img_like = view.findViewById(R.id.myhide_img_like);
-        TextView myhide_tv_km = view.findViewById(R.id.myhide_tv_km);
+        TextView myhide_tv_km = view.findViewById(R.id.myhide_tv_who);
         TextView myhide_tv_tag1 = view.findViewById(R.id.myhide_tv_tag1);
         TextView myhide_tv_tag2 = view.findViewById(R.id.myhide_tv_tag2);
         TextView myhide_tv_tag3 = view.findViewById(R.id.myhide_tv_tag3);

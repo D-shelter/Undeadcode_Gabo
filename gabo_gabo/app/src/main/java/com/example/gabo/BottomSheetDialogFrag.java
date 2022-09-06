@@ -211,8 +211,8 @@ public class BottomSheetDialogFrag extends BottomSheetDialogFragment {
 
         });
         /*---------------------코멘트 보내기 버튼--------------------- */
-        btn_find = view.findViewById(R.id.btn_find);
-        btn_find.setOnClickListener(new View.OnClickListener() {
+        comment_submit_btn = view.findViewById(R.id.comment_submit_btn);
+        comment_submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 t_comment = view.findViewById(R.id.t_comment);
