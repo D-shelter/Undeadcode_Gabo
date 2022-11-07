@@ -18,6 +18,9 @@
 ![주요기능1](https://user-images.githubusercontent.com/107041228/200228239-0d3cc9b8-59c8-4bcf-8a3e-97f5f4952940.png)
 ![주요기능2](https://user-images.githubusercontent.com/107041228/200228264-e772fd14-c144-4f85-817e-c29c0bec37e7.png)
 ---
+### :pushpin:DB Tree
+![DB트리](https://user-images.githubusercontent.com/107041228/200233233-db1f8a64-8b1b-4c82-a5d7-09e084e352eb.png)
+---
 ### :pushpin:개발도구
 <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=fff"/> <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=OpenJDK&logoColor=white"/>
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=fff"/>
