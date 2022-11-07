@@ -5,10 +5,14 @@
 - 개발기간 : 8.16 ~ 9.7
 - 개발팀 : UNDEAD CODE (이정영, 박광연, 안호연, 박재성, 이정현, 오지영)
 ---
-### 시연영상
+### :pushpin:시연영상
 [![Video Label](https://user-images.githubusercontent.com/107041228/200220257-c641c698-76c3-4ff5-9494-401b910d56cc.png)](https://www.youtube.com/watch?v=d5VCnLbjwEo)
 ---
-### 개발도구
+### :pushpin:주요기능
+![주요기능1](https://user-images.githubusercontent.com/107041228/200228239-0d3cc9b8-59c8-4bcf-8a3e-97f5f4952940.png)
+![주요기능2](https://user-images.githubusercontent.com/107041228/200228264-e772fd14-c144-4f85-817e-c29c0bec37e7.png)
+---
+### :pushpin:개발도구
 <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=fff"/> <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=OpenJDK&logoColor=white"/>
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=fff"/>
 <img src="https://img.shields.io/badge/AndroidStudio-3DDC84?style=flat&logo=AndroidStudio&logoColor=fff"/>
