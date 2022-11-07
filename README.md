@@ -3,7 +3,13 @@
 # 가보 - 가져라 보물!
 - 광주인공지능사관학교 3기 핵심역량 프로젝트 우수상 수상작
 - 개발기간 : 8.16 ~ 9.7
-- 개발팀 : UNDEAD CODE (이정영, 박광연, 안호연, 박재성, 이정현, 오지영)
+- 개발팀 : UNDEAD CODE
+  - 이정영 (Project Manager, Backe-End) : 일정관리, 산출물·품질·리스트 관리 , DB구현, 분석 코드 개발
+  - 박광연 (Back-End) : DB구현, 분석코드 개발
+  - 안호연 (Researcher) : 분석 과제 기획 및 보고서 작성, 데이터 분석, PPT제작, 시연영상 기획·제작
+  - 박재성 (Back-End) : 자료조사, 데이터 조사, 분석코드 개발
+  - 이정현 (Front-End) : 데이터 수집, 크롤링, 분석코드 개발
+  - 오지영 (Front-End) : 안드로이드 UI/UX , 데이터 분석, PPT제작, 디자인
 ---
 ### :pushpin:시연영상
 [![Video Label](https://user-images.githubusercontent.com/107041228/200220257-c641c698-76c3-4ff5-9494-401b910d56cc.png)](https://www.youtube.com/watch?v=d5VCnLbjwEo)
