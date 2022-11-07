@@ -5,7 +5,14 @@
 - 개발기간 : 8.16 ~ 9.7
 - 개발팀 : UNDEAD CODE (이정영, 박광연, 안호연, 박재성, 이정현, 오지영)
 ---
-#### 시연영상
-[![Video Label](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/eb1b42c0-94f5-489d-b7b0-e34a98cea530/%ED%91%9C%EC%A7%80.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221107%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221107T032145Z&X-Amz-Expires=86400&X-Amz-Signature=776d7e85c6c13e1199adbc46ff75c3c2e6623f62119a91c070f1949814fe2290&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22%25ED%2591%259C%25EC%25A7%2580.png%22&x-id=GetObject)](https://www.youtube.com/watch?v=d5VCnLbjwEo)
+### 시연영상
+[![Video Label](https://user-images.githubusercontent.com/107041228/200220257-c641c698-76c3-4ff5-9494-401b910d56cc.png)](https://www.youtube.com/watch?v=d5VCnLbjwEo)
+---
+### 개발도구
+<img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=fff"/> <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=OpenJDK&logoColor=white"/>
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=fff"/>
+<img src="https://img.shields.io/badge/AndroidStudio-3DDC84?style=flat&logo=AndroidStudio&logoColor=fff"/>
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=fff"/>
+<img src="https://img.shields.io/badge/CSS-1572B6?style=flat&logo=CSS3&logoColor=fff"/>
 </br>
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anuraghazra&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
+<img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=Bootstrap&logoColor=fff"/>
